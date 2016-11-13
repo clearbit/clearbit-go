@@ -84,29 +84,37 @@ type Person struct {
 	InActiveAt    string `json:"inActiveAt"`
 }
 
-type personFindParams struct {
+type PersonCompany struct {
+	Person  Person  `json:"person"`
+	Company Company `json:"company"`
+}
+
+type PersonFindParams struct {
 	Email string `url:"email,omitempty"`
 }
 
-// PersonService provides methods for accessing Twitter direct message
-// API endpoints.
 type PersonService struct {
 	baseSling *sling.Sling
 	sling     *sling.Sling
 }
 
-// newPersonService returns a new PersonService.
 func newPersonService(sling *sling.Sling) *PersonService {
 	return &PersonService{
 		baseSling: sling.New(),
-		sling:     sling.Base(personBase).Path("/v2/people/"),
+		sling:     sling.Base(personBase).Path("/v2/"),
 	}
 }
 
-func (s *PersonService) FindByEmail(email string) (*Person, *http.Response, error) {
-	params := &personFindParams{Email: email}
+func (s *PersonService) Find(params PersonFindParams) (*Person, *http.Response, error) {
 	item := new(Person)
 	apiError := new(APIError)
-	resp, err := s.sling.New().Get("find").QueryStruct(params).Receive(item, apiError)
+	resp, err := s.sling.New().Get("people/find").QueryStruct(params).Receive(item, apiError)
+	return item, resp, relevantError(err, *apiError)
+}
+
+func (s *PersonService) FindCombined(params PersonFindParams) (*PersonCompany, *http.Response, error) {
+	item := new(PersonCompany)
+	apiError := new(APIError)
+	resp, err := s.sling.New().Get("combined/find").QueryStruct(params).Receive(item, apiError)
 	return item, resp, relevantError(err, *apiError)
 }

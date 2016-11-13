@@ -15,7 +15,7 @@ type AutocompleteItem struct {
 	Name   string `json:"name"`
 }
 
-type autocompleteSuggestParams struct {
+type AutocompleteSuggestParams struct {
 	Query string `url:"query"`
 }
 
@@ -31,8 +31,7 @@ func newAutocompleteService(sling *sling.Sling) *AutocompleteService {
 	}
 }
 
-func (s *AutocompleteService) Suggest(query string) ([]AutocompleteItem, *http.Response, error) {
-	params := &autocompleteSuggestParams{Query: query}
+func (s *AutocompleteService) Suggest(params AutocompleteSuggestParams) ([]AutocompleteItem, *http.Response, error) {
 	items := new([]AutocompleteItem)
 	apiError := new(APIError)
 	resp, err := s.sling.New().Get("suggest").QueryStruct(params).Receive(items, apiError)
