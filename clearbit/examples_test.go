@@ -30,6 +30,8 @@ func ExampleAutocompleteService_Suggest_output() {
 
 	if err == nil {
 		fmt.Println(results[0].Domain, resp.Status)
+	} else {
+		fmt.Println(err, resp.Status)
 	}
 
 	// Output: clearbit.com 200 OK
@@ -43,6 +45,8 @@ func ExampleProspectorService_Search_output() {
 
 	if err == nil {
 		fmt.Println(results[0].Email, resp.Status)
+	} else {
+		fmt.Println(err, resp.Status)
 	}
 
 	// Output: chris@clearbit.com 200 OK
@@ -56,6 +60,8 @@ func ExampleCompanyService_Find_output() {
 
 	if err == nil {
 		fmt.Println(results.Name, resp.Status)
+	} else {
+		fmt.Println(err, resp.Status)
 	}
 
 	// Output: Clearbit 200 OK
@@ -69,6 +75,8 @@ func ExamplePersonService_Find_output() {
 
 	if err == nil {
 		fmt.Println(results.Name.FullName, resp.Status)
+	} else {
+		fmt.Println(err, resp.Status)
 	}
 
 	// Output: Alex MacCaw 200 OK
@@ -82,7 +90,24 @@ func ExamplePersonService_FindCombined_output() {
 
 	if err == nil {
 		fmt.Println(results.Person.Name.FullName, results.Company.Name, resp.Status)
+	} else {
+		fmt.Println(err, resp.Status)
 	}
 
 	// Output: Alex MacCaw Clearbit 200 OK
+}
+
+func ExampleDiscoveryService_Search_output() {
+	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	results, resp, err := client.Discovery.Search(clearbit.DiscoverySearchParams{
+		Query: "name:clearbit",
+	})
+
+	if err == nil {
+		fmt.Println(results.Results[0].Domain, resp.Status)
+	} else {
+		fmt.Println(err, resp.Status)
+	}
+
+	// Output: clearbit.com 200 OK
 }
