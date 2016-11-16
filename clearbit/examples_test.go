@@ -2,13 +2,34 @@ package clearbit_test
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/clearbit/clearbit-go/clearbit"
 )
 
+//In this example we manually set the Clearbit key but notice that when
+//SetApiKey is not called we will fallback to the CLEARBIT_KEY environment
+//variable.
+func ExampleNewClient_manuallyConfiguringEverything_output() {
+	yourApiKey := os.Getenv("CLEARBIT_KEY")
+
+	client := clearbit.NewClient(
+		clearbit.SetHTTPClient(&http.Client{}),
+		clearbit.SetAPIKey(yourApiKey),
+	)
+
+	_, resp, _ := client.Discovery.Search(clearbit.DiscoverySearchParams{
+		Query: "name:clearbit",
+	})
+
+	fmt.Println(resp.Status)
+
+	// Output: 200 OK
+}
+
 func ExampleRevealService_Find_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Reveal.Find(clearbit.RevealFindParams{
 		IP: "104.193.168.24",
 	})
@@ -23,7 +44,7 @@ func ExampleRevealService_Find_output() {
 }
 
 func ExampleAutocompleteService_Suggest_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Autocomplete.Suggest(clearbit.AutocompleteSuggestParams{
 		Query: "clearbit",
 	})
@@ -38,7 +59,7 @@ func ExampleAutocompleteService_Suggest_output() {
 }
 
 func ExampleProspectorService_Search_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Prospector.Search(clearbit.ProspectorSearchParams{
 		Domain: "clearbit.com",
 	})
@@ -53,7 +74,7 @@ func ExampleProspectorService_Search_output() {
 }
 
 func ExampleCompanyService_Find_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Company.Find(clearbit.CompanyFindParams{
 		Domain: "clearbit.com",
 	})
@@ -68,7 +89,7 @@ func ExampleCompanyService_Find_output() {
 }
 
 func ExamplePersonService_Find_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Person.Find(clearbit.PersonFindParams{
 		Email: "alex@clearbit.com",
 	})
@@ -83,7 +104,7 @@ func ExamplePersonService_Find_output() {
 }
 
 func ExamplePersonService_FindCombined_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Person.FindCombined(clearbit.PersonFindParams{
 		Email: "alex@clearbit.com",
 	})
@@ -98,7 +119,7 @@ func ExamplePersonService_FindCombined_output() {
 }
 
 func ExampleDiscoveryService_Search_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Discovery.Search(clearbit.DiscoverySearchParams{
 		Query: "name:clearbit",
 	})

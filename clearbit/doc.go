@@ -12,7 +12,7 @@ Usage:
   )
 
   func main() {
-      client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+      client := clearbit.NewClient(clearbit.SetAPIKey("sk_1234567890123123"))
 
       results, resp, _ := client.Reveal.Find(clearbit.RevealFindParams{
             IP: "104.193.168.24",
