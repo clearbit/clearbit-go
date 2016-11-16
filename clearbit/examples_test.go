@@ -14,10 +14,12 @@ func ExampleRevealService_Find_output() {
 	})
 
 	if err == nil {
+		fmt.Println(results.Company.Name, resp.Status)
+	} else {
 		fmt.Println(results, resp.Status)
 	}
 
-	// Output: PENDING 200 OK
+	// Output: Clearbit 200 OK
 }
 
 func ExampleAutocompleteService_Suggest_output() {

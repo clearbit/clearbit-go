@@ -9,6 +9,8 @@ const (
 	companyBase = "https://company.clearbit.com"
 )
 
+// Company contains all the company fields gathered from the Company json
+// structure. https://dashboard.clearbit.com/docs#enrichment-api-company-api
 type Company struct {
 	ID            string   `json:"id"`
 	Name          string   `json:"name"`
@@ -98,10 +100,14 @@ type Company struct {
 	Tech      []string `json:"tech"`
 }
 
+// CompanyFindParams wraps the parameters needed to interact with the Company
+// API through the Find method
 type CompanyFindParams struct {
 	Domain string `url:"domain,omitempty"`
 }
 
+// CompanyService gives access to the Company API.
+// https://dashboard.clearbit.com/docs#enrichment-api-company-api
 type CompanyService struct {
 	baseSling *sling.Sling
 	sling     *sling.Sling

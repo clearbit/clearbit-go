@@ -9,6 +9,7 @@ const (
 	revealBase = "https://reveal.clearbit.com"
 )
 
+// Reveal reprents the company returned by a call to Find
 type Reveal struct {
 	IP    string `json:"ip"`
 	Fuzzy bool   `json:"fuzzy"`
@@ -17,10 +18,16 @@ type Reveal struct {
 	Company Company
 }
 
+// RevealFindParams wraps the parameters needed to interact with the Reveal API
+// through the Find method
 type RevealFindParams struct {
 	IP string `url:"ip,omitempty"`
 }
 
+// RevealService gives access to the Reveal API.
+//
+// Our Reveal API takes an IP address, and returns the company associated with
+// that IP.
 type RevealService struct {
 	baseSling *sling.Sling
 	sling     *sling.Sling

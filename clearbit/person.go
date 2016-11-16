@@ -9,6 +9,8 @@ const (
 	personBase = "https://person.clearbit.com"
 )
 
+// Person contains all the person fields gathered from the Person json
+// structure. https://dashboard.clearbit.com/docs#enrichment-api-person-api
 type Person struct {
 	ID   string `json:"id"`
 	Name struct {
@@ -84,15 +86,21 @@ type Person struct {
 	InActiveAt    string `json:"inActiveAt"`
 }
 
+// PersonCompany represents the item returned by a call to FindCombined.
+// It joins the Person and Company structure.
 type PersonCompany struct {
 	Person  Person  `json:"person"`
 	Company Company `json:"company"`
 }
 
+// PersonFindParams wraps the parameters needed to interact with the Person API
+// through the Find method
 type PersonFindParams struct {
 	Email string `url:"email,omitempty"`
 }
 
+// PersonService gives access to the Person API.
+// https://dashboard.clearbit.com/docs#enrichment-api-person-api
 type PersonService struct {
 	baseSling *sling.Sling
 	sling     *sling.Sling
@@ -113,7 +121,8 @@ func (s *PersonService) Find(params PersonFindParams) (*Person, *http.Response, 
 	return item, resp, relevantError(err, *apiError)
 }
 
-//FindCombined looks up a person and company simultaneously based on a email address
+//FindCombined looks up a person and company simultaneously based on a email
+//address
 func (s *PersonService) FindCombined(params PersonFindParams) (*PersonCompany, *http.Response, error) {
 	item := new(PersonCompany)
 	apiError := new(APIError)
