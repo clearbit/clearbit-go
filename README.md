@@ -11,7 +11,7 @@ The Clearbit API key can be changed with:
   client := clearbit.NewClient(clearbit.WithAPIKey("sk_1234567890123123"))
 ```
 
-You can tap another http.Client with:
+You can tap another `http.Client` with:
 
 ```go
   client := clearbit.NewClient(clearbit.WithHTTPClient(&http.Client{}))
