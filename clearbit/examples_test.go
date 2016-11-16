@@ -9,14 +9,14 @@ import (
 )
 
 //In this example we manually set the Clearbit key but notice that when
-//SetApiKey is not called we will fallback to the CLEARBIT_KEY environment
+//WithApiKey is not called we will fallback to the CLEARBIT_KEY environment
 //variable.
 func ExampleNewClient_manuallyConfiguringEverything_output() {
 	yourApiKey := os.Getenv("CLEARBIT_KEY")
 
 	client := clearbit.NewClient(
-		clearbit.SetHTTPClient(&http.Client{}),
-		clearbit.SetAPIKey(yourApiKey),
+		clearbit.WithHTTPClient(&http.Client{}),
+		clearbit.WithAPIKey(yourApiKey),
 	)
 
 	_, resp, _ := client.Discovery.Search(clearbit.DiscoverySearchParams{
