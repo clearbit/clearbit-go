@@ -1,6 +1,6 @@
 #Clearbit Go Bindings
 
-#Usage:
+##Usage
 
 To use one of the Clearbit APIs you'll first need to create a client by calling the `NewClient` function.
 By default `NewClient` will use a new `http.Client` and will fetch the Clearbit API key from the `CLEARBIT_KEY` environment variable.
