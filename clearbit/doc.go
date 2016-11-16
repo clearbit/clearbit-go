@@ -15,7 +15,7 @@ Usage:
       client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
 
       results, resp, _ := client.Reveal.Find(clearbit.RevealFindParams{
-            IP: "104.193.168.24"
+            IP: "104.193.168.24",
       })
 
       fmt.Println(results, resp)

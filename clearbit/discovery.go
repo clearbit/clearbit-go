@@ -35,6 +35,9 @@ func newDiscoveryService(sling *sling.Sling) *DiscoveryService {
 	}
 }
 
+// Search lets you search for companies via specific criteria. For example, you
+// could search for all companies with a specific funding, that use a certain
+// technology, or that are similar to your existing customers.
 func (s *DiscoveryService) Search(params DiscoverySearchParams) (*DiscoveryResults, *http.Response, error) {
 	item := new(DiscoveryResults)
 	apiError := new(APIError)

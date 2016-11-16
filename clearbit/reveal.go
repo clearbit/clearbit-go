@@ -33,6 +33,7 @@ func newRevealService(sling *sling.Sling) *RevealService {
 	}
 }
 
+// Find takes an IP address, and returns the company associated with that IP
 func (s *RevealService) Find(params RevealFindParams) (*Reveal, *http.Response, error) {
 	item := new(Reveal)
 	apiError := new(APIError)

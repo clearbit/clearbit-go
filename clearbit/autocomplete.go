@@ -31,6 +31,7 @@ func newAutocompleteService(sling *sling.Sling) *AutocompleteService {
 	}
 }
 
+// Suggest lets you auto-complete company names and retreive logo and domain information
 func (s *AutocompleteService) Suggest(params AutocompleteSuggestParams) ([]AutocompleteItem, *http.Response, error) {
 	items := new([]AutocompleteItem)
 	apiError := new(APIError)

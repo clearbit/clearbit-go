@@ -41,6 +41,8 @@ func newProspectorService(sling *sling.Sling) *ProspectorService {
 	}
 }
 
+// Search lets you fetch contacts and emails associated with a company,
+// employment role, seniority, and job title.
 func (s *ProspectorService) Search(params ProspectorSearchParams) ([]ProspectorItem, *http.Response, error) {
 	items := new([]ProspectorItem)
 	apiError := new(APIError)

@@ -19,7 +19,7 @@ type ErrorDetail struct {
 func (e APIError) Error() string {
 	if len(e.Errors) > 0 {
 		err := e.Errors[0]
-		return fmt.Sprintf("clearbit: %d %v", err.Type, err.Message)
+		return fmt.Sprintf("clearbit: %s %v", err.Type, err.Message)
 	}
 	return ""
 }

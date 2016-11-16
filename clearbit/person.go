@@ -105,6 +105,7 @@ func newPersonService(sling *sling.Sling) *PersonService {
 	}
 }
 
+//Find looks up a person based on a email address
 func (s *PersonService) Find(params PersonFindParams) (*Person, *http.Response, error) {
 	item := new(Person)
 	apiError := new(APIError)
@@ -112,6 +113,7 @@ func (s *PersonService) Find(params PersonFindParams) (*Person, *http.Response, 
 	return item, resp, relevantError(err, *apiError)
 }
 
+//FindCombined looks up a person and company simultaneously based on a email address
 func (s *PersonService) FindCombined(params PersonFindParams) (*PersonCompany, *http.Response, error) {
 	item := new(PersonCompany)
 	apiError := new(APIError)

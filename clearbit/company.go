@@ -18,13 +18,13 @@ type Company struct {
 	URL           string   `json:"url"`
 
 	Site struct {
-		URL             string `json:"url"`
-		Title           string `json:"title"`
-		H1              string `json:"h1"`
-		MetaDescription string `json:"metaDescription"`
-		MetaAuthor      string `json:"metaAuthor"`
-		PhoneNumbers    string `json:"phoneNumbers"`
-		EmailAddresses  string `json:"emailAddresses"`
+		URL             string   `json:"url"`
+		Title           string   `json:"title"`
+		H1              string   `json:"h1"`
+		MetaDescription string   `json:"metaDescription"`
+		MetaAuthor      string   `json:"metaAuthor"`
+		PhoneNumbers    []string `json:"phoneNumbers"`
+		EmailAddresses  []string `json:"emailAddresses"`
 	} `json:"site"`
 
 	Category struct {
@@ -37,7 +37,7 @@ type Company struct {
 	Tags        []string `json:"tags"`
 	Description string   `json:"description"`
 	FoundedYear int      `json:"foundedYear"`
-	Location    int      `json:"location"`
+	Location    string   `json:"location"`
 
 	Geo struct {
 		StreetNumber string  `json:"streetNumber"`
@@ -59,7 +59,7 @@ type Company struct {
 
 	Twitter struct {
 		Handle    string `json:"handle"`
-		ID        int    `json:"id"`
+		ID        string `json:"id"`
 		Bio       string `json:"bio"`
 		Followers int    `json:"followers"`
 		Following int    `json:"following"`
@@ -114,6 +114,7 @@ func newCompanyService(sling *sling.Sling) *CompanyService {
 	}
 }
 
+//Find looks up a company based on its domain
 func (s *CompanyService) Find(params CompanyFindParams) (*Company, *http.Response, error) {
 	item := new(Company)
 	apiError := new(APIError)
