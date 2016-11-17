@@ -8,9 +8,10 @@ import (
 	"github.com/clearbit/clearbit-go/clearbit"
 )
 
-//In this example we manually set the Clearbit key but notice that when
-//WithApiKey is not called we will fallback to the CLEARBIT_KEY environment
-//variable.
+func handleError(err error, resp *http.Response) {
+  fmt.Printf("%#v\n%s\n", err, resp.Status)
+}
+
 func ExampleNewClient_manuallyConfiguringEverything_output() {
 	yourApiKey := os.Getenv("CLEARBIT_KEY")
 
@@ -37,7 +38,7 @@ func ExampleRevealService_Find_output() {
 	if err == nil {
 		fmt.Println(results.Company.Name, resp.Status)
 	} else {
-		fmt.Println(results, resp.Status)
+    handleError(err, resp)
 	}
 
 	// Output: Clearbit 200 OK
@@ -52,7 +53,7 @@ func ExampleAutocompleteService_Suggest_output() {
 	if err == nil {
 		fmt.Println(results[0].Domain, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+    handleError(err, resp)
 	}
 
 	// Output: clearbit.com 200 OK
@@ -67,7 +68,7 @@ func ExampleProspectorService_Search_output() {
 	if err == nil {
 		fmt.Println(results[0].Email, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+    handleError(err, resp)
 	}
 
 	// Output: chris@clearbit.com 200 OK
@@ -82,7 +83,7 @@ func ExampleCompanyService_Find_output() {
 	if err == nil {
 		fmt.Println(results.Name, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+    handleError(err, resp)
 	}
 
 	// Output: Clearbit 200 OK
@@ -97,7 +98,7 @@ func ExamplePersonService_Find_output() {
 	if err == nil {
 		fmt.Println(results.Name.FullName, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+    handleError(err, resp)
 	}
 
 	// Output: Alex MacCaw 200 OK
@@ -112,7 +113,7 @@ func ExamplePersonService_FindCombined_output() {
 	if err == nil {
 		fmt.Println(results.Person.Name.FullName, results.Company.Name, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+    handleError(err, resp)
 	}
 
 	// Output: Alex MacCaw Clearbit 200 OK
@@ -127,7 +128,7 @@ func ExampleDiscoveryService_Search_output() {
 	if err == nil {
 		fmt.Println(results.Results[0].Domain, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+    handleError(err, resp)
 	}
 
 	// Output: clearbit.com 200 OK
