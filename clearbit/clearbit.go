@@ -8,7 +8,7 @@ import (
 
 // Client is a Clearbit client for making Clearbit API requests.
 type Client struct {
-	sling  *sling.Sling
+	sling *sling.Sling
 
 	Autocomplete *AutocompleteService
 	Person       *PersonService
@@ -25,6 +25,8 @@ type Config struct {
 	httpClient *http.Client
 }
 
+// Option is an option passed to the NewClient function used to change
+// the client configuration
 type Option func(*Config)
 
 // WithHTTPClient sets the optional http.Client we can use to make requests

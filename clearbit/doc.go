@@ -19,11 +19,11 @@ Both can be combined and the order is not important.
 Once the client is created you can use any of the Clearbit APIs
 
 	client.Autocomplete
-	client.Company     
-	client.Discovery   
-	client.Person      
-	client.Prospector  
-	client.Reveal      
+	client.Company
+	client.Discovery
+	client.Person
+	client.Prospector
+	client.Reveal
 
 Example:
 
