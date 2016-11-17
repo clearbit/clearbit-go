@@ -1,5 +1,7 @@
 #Clearbit Go Bindings
 
+Package clearbit provides a client for using the Clearbit API.
+
 ##Usage
 
 To use one of the Clearbit APIs you'll first need to create a client by calling the `NewClient` function.
@@ -54,3 +56,10 @@ Example:
 ```
 
 Please see `examples_test.go` for more details.
+
+## License
+
+clearbit-go is copyright © 2016 Clearbit. It is free software, and may
+be redistributed under the terms specified in the [`LICENSE`] file.
+
+[`LICENSE`]: /MIT-LICENSE
