@@ -25,8 +25,10 @@ type Config struct {
 	httpClient *http.Client
 }
 
+type Option func(*Config)
+
 // WithHTTPClient sets the optional http.Client we can use to make requests
-func WithHTTPClient(httpClient *http.Client) func(*Config) {
+func WithHTTPClient(httpClient *http.Client) Option {
 	return func(config *Config) {
 		config.httpClient = httpClient
 	}
@@ -43,7 +45,7 @@ func WithAPIKey(apiKey string) func(*Config) {
 }
 
 // NewClient returns a new Client.
-func NewClient(options ...func(*Config)) *Client {
+func NewClient(options ...Option) *Client {
 	config := Config{apiKey: os.Getenv("CLEARBIT_KEY")}
 
 	for _, option := range options {
