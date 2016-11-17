@@ -41,7 +41,7 @@ Example:
             IP: "104.193.168.24",
       })
 
-      if err != nil {}
+      if err != nil {
         fmt.Println(results, resp)
       }
   }
