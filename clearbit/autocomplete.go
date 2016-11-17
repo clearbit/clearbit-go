@@ -25,7 +25,7 @@ type AutocompleteSuggestParams struct {
 // AutocompleteService gives access to the Autocomplete API.
 //
 // Company Autocomplete is a free API that lets you auto-complete company names
-// and retreive logo and domain information.
+// and retrieve logo and domain information.
 type AutocompleteService struct {
 	baseSling *sling.Sling
 	sling     *sling.Sling
@@ -38,7 +38,7 @@ func newAutocompleteService(sling *sling.Sling) *AutocompleteService {
 	}
 }
 
-// Suggest lets you auto-complete company names and retreive logo and domain
+// Suggest lets you auto-complete company names and retrieve logo and domain
 // information
 func (s *AutocompleteService) Suggest(params AutocompleteSuggestParams) ([]AutocompleteItem, *http.Response, error) {
 	items := new([]AutocompleteItem)

@@ -2,13 +2,35 @@ package clearbit_test
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/clearbit/clearbit-go/clearbit"
 )
 
+func handleError(err error, resp *http.Response) {
+	fmt.Printf("%#v\n%s\n", err, resp.Status)
+}
+
+func ExampleNewClient_manuallyConfiguringEverything_output() {
+	yourApiKey := os.Getenv("CLEARBIT_KEY")
+
+	client := clearbit.NewClient(
+		clearbit.WithHTTPClient(&http.Client{}),
+		clearbit.WithAPIKey(yourApiKey),
+	)
+
+	_, resp, _ := client.Discovery.Search(clearbit.DiscoverySearchParams{
+		Query: "name:clearbit",
+	})
+
+	fmt.Println(resp.Status)
+
+	// Output: 200 OK
+}
+
 func ExampleRevealService_Find_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Reveal.Find(clearbit.RevealFindParams{
 		IP: "104.193.168.24",
 	})
@@ -16,14 +38,14 @@ func ExampleRevealService_Find_output() {
 	if err == nil {
 		fmt.Println(results.Company.Name, resp.Status)
 	} else {
-		fmt.Println(results, resp.Status)
+		handleError(err, resp)
 	}
 
 	// Output: Clearbit 200 OK
 }
 
 func ExampleAutocompleteService_Suggest_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Autocomplete.Suggest(clearbit.AutocompleteSuggestParams{
 		Query: "clearbit",
 	})
@@ -31,14 +53,14 @@ func ExampleAutocompleteService_Suggest_output() {
 	if err == nil {
 		fmt.Println(results[0].Domain, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+		handleError(err, resp)
 	}
 
 	// Output: clearbit.com 200 OK
 }
 
 func ExampleProspectorService_Search_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Prospector.Search(clearbit.ProspectorSearchParams{
 		Domain: "clearbit.com",
 	})
@@ -46,14 +68,14 @@ func ExampleProspectorService_Search_output() {
 	if err == nil {
 		fmt.Println(results[0].Email, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+		handleError(err, resp)
 	}
 
 	// Output: chris@clearbit.com 200 OK
 }
 
 func ExampleCompanyService_Find_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Company.Find(clearbit.CompanyFindParams{
 		Domain: "clearbit.com",
 	})
@@ -61,14 +83,14 @@ func ExampleCompanyService_Find_output() {
 	if err == nil {
 		fmt.Println(results.Name, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+		handleError(err, resp)
 	}
 
 	// Output: Clearbit 200 OK
 }
 
 func ExamplePersonService_Find_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Person.Find(clearbit.PersonFindParams{
 		Email: "alex@clearbit.com",
 	})
@@ -76,14 +98,14 @@ func ExamplePersonService_Find_output() {
 	if err == nil {
 		fmt.Println(results.Name.FullName, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+		handleError(err, resp)
 	}
 
 	// Output: Alex MacCaw 200 OK
 }
 
 func ExamplePersonService_FindCombined_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Person.FindCombined(clearbit.PersonFindParams{
 		Email: "alex@clearbit.com",
 	})
@@ -91,14 +113,14 @@ func ExamplePersonService_FindCombined_output() {
 	if err == nil {
 		fmt.Println(results.Person.Name.FullName, results.Company.Name, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+		handleError(err, resp)
 	}
 
 	// Output: Alex MacCaw Clearbit 200 OK
 }
 
 func ExampleDiscoveryService_Search_output() {
-	client := clearbit.NewClient(nil, os.Getenv("CLEARBIT_KEY"))
+	client := clearbit.NewClient()
 	results, resp, err := client.Discovery.Search(clearbit.DiscoverySearchParams{
 		Query: "name:clearbit",
 	})
@@ -106,7 +128,7 @@ func ExampleDiscoveryService_Search_output() {
 	if err == nil {
 		fmt.Println(results.Results[0].Domain, resp.Status)
 	} else {
-		fmt.Println(err, resp.Status)
+		handleError(err, resp)
 	}
 
 	// Output: clearbit.com 200 OK

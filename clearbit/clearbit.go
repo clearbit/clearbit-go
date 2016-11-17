@@ -3,12 +3,12 @@ package clearbit
 import (
 	"github.com/dghubble/sling"
 	"net/http"
+	"os"
 )
 
 // Client is a Clearbit client for making Clearbit API requests.
 type Client struct {
-	apiKey string
-	sling  *sling.Sling
+	sling *sling.Sling
 
 	Autocomplete *AutocompleteService
 	Person       *PersonService
@@ -18,13 +18,46 @@ type Client struct {
 	Reveal       *RevealService
 }
 
+// Config represents all the parameters available to configure a Clearbit
+// client
+type Config struct {
+	apiKey     string
+	httpClient *http.Client
+}
+
+// Option is an option passed to the NewClient function used to change
+// the client configuration
+type Option func(*Config)
+
+// WithHTTPClient sets the optional http.Client we can use to make requests
+func WithHTTPClient(httpClient *http.Client) Option {
+	return func(config *Config) {
+		config.httpClient = httpClient
+	}
+}
+
+// WithAPIKey sets the Clearbit API key.
+//
+// When this is not provided we'll default to the `CLEARBIT_KEY` environment
+// variable.
+func WithAPIKey(apiKey string) func(*Config) {
+	return func(config *Config) {
+		config.apiKey = apiKey
+	}
+}
+
 // NewClient returns a new Client.
-func NewClient(httpClient *http.Client, apiKey string) *Client {
-	base := sling.New().Client(httpClient)
-	base.SetBasicAuth(apiKey, "")
+func NewClient(options ...Option) *Client {
+	config := Config{apiKey: os.Getenv("CLEARBIT_KEY")}
+
+	for _, option := range options {
+		option(&config)
+	}
+
+	base := sling.New().Client(config.httpClient)
+	base.SetBasicAuth(config.apiKey, "")
 
 	return &Client{
-		apiKey:       apiKey,
 		Autocomplete: newAutocompleteService(base.New()),
 		Person:       newPersonService(base.New()),
 		Company:      newCompanyService(base.New()),
