@@ -56,7 +56,7 @@ Example:
   }
 ```
 
-Please see `examples_test.go` for more details.
+Please see [the examples](https://godoc.org/github.com/clearbit/clearbit-go/clearbit#pkg-examples) for more details.
 
 ## License
 
