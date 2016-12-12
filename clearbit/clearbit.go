@@ -22,9 +22,9 @@ type Client struct {
 // Config represents all the parameters available to configure a Clearbit
 // client
 type Config struct {
-	apiKey		string
-	httpClient 	*http.Client
-	secondsTimeout	int
+	apiKey         string
+	httpClient     *http.Client
+	secondsTimeout int
 }
 
 // Option is an option passed to the NewClient function used to change
@@ -61,8 +61,8 @@ func WithTimeout(s int) func(*Config) {
 // NewClient returns a new Client.
 func NewClient(options ...Option) *Client {
 	config := Config{
-		apiKey: os.Getenv("CLEARBIT_KEY"),
-		httpClient : &http.Client{},
+		apiKey:         os.Getenv("CLEARBIT_KEY"),
+		httpClient:     &http.Client{},
 		secondsTimeout: 10,
 	}
 
