@@ -26,7 +26,7 @@ If you use the httpClient just to set the timeout you can instead use WithTimeou
   client := clearbit.NewClient(clearbit.WithTimeout(20))
 ```
 
-Both can be combined and the order is not important.
+All options can be combined and the order is not important.
 
 Once the client is created you can use any of the Clearbit APIs
 
