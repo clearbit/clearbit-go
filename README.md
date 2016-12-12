@@ -20,6 +20,12 @@ You can tap another `http.Client` with:
   client := clearbit.NewClient(clearbit.WithHTTPClient(&http.Client{}))
 ```
 
+If you use the httpClient just to set the timeout you can instead use WithTimeout:
+
+```go
+  client := clearbit.NewClient(clearbit.WithTimeout(20))
+```
+
 Both can be combined and the order is not important.
 
 Once the client is created you can use any of the Clearbit APIs

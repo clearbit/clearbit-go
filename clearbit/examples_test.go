@@ -18,6 +18,7 @@ func ExampleNewClient_manuallyConfiguringEverything_output() {
 	client := clearbit.NewClient(
 		clearbit.WithHTTPClient(&http.Client{}),
 		clearbit.WithAPIKey(yourApiKey),
+		clearbit.WithTimeout(20),
 	)
 
 	_, resp, _ := client.Discovery.Search(clearbit.DiscoverySearchParams{

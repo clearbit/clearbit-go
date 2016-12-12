@@ -4,6 +4,7 @@ import (
 	"github.com/dghubble/sling"
 	"net/http"
 	"os"
+	"time"
 )
 
 // Client is a Clearbit client for making Clearbit API requests.
@@ -21,8 +22,9 @@ type Client struct {
 // Config represents all the parameters available to configure a Clearbit
 // client
 type Config struct {
-	apiKey     string
-	httpClient *http.Client
+	apiKey		string
+	httpClient 	*http.Client
+	secondsTimeout	int
 }
 
 // Option is an option passed to the NewClient function used to change
@@ -46,13 +48,29 @@ func WithAPIKey(apiKey string) func(*Config) {
 	}
 }
 
+// WithTimeout sets the timeout in seconds directly
+//
+// This is just an easier way to set the timeout than directly setting it
+// through the withHTTPClient option.
+func WithTimeout(s int) func(*Config) {
+	return func(config *Config) {
+		config.secondsTimeout = s
+	}
+}
+
 // NewClient returns a new Client.
 func NewClient(options ...Option) *Client {
-	config := Config{apiKey: os.Getenv("CLEARBIT_KEY")}
+	config := Config{
+		apiKey: os.Getenv("CLEARBIT_KEY"),
+		httpClient : &http.Client{},
+		secondsTimeout: 10,
+	}
 
 	for _, option := range options {
 		option(&config)
 	}
+
+	config.httpClient.Timeout = time.Duration(config.secondsTimeout) * time.Second
 
 	base := sling.New().Client(config.httpClient)
 	base.SetBasicAuth(config.apiKey, "")
