@@ -48,7 +48,7 @@ func WithAPIKey(apiKey string) func(*config) {
 	}
 }
 
-// WithTimeout sets the timeout in seconds directly
+// WithTimeout sets the http timeout
 //
 // This is just an easier way to set the timeout than directly setting it
 // through the withHTTPClient option.
