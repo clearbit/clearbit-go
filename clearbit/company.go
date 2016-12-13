@@ -123,7 +123,7 @@ func newCompanyService(sling *sling.Sling) *CompanyService {
 //Find looks up a company based on its domain
 func (s *CompanyService) Find(params CompanyFindParams) (*Company, *http.Response, error) {
 	item := new(Company)
-	apiError := new(APIError)
-	resp, err := s.sling.New().Get("find").QueryStruct(params).Receive(item, apiError)
-	return item, resp, relevantError(err, *apiError)
+	ae := new(apiError)
+	resp, err := s.sling.New().Get("find").QueryStruct(params).Receive(item, ae)
+	return item, resp, relevantError(err, *ae)
 }

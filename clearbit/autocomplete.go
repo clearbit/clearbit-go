@@ -42,7 +42,7 @@ func newAutocompleteService(sling *sling.Sling) *AutocompleteService {
 // information
 func (s *AutocompleteService) Suggest(params AutocompleteSuggestParams) ([]AutocompleteItem, *http.Response, error) {
 	items := new([]AutocompleteItem)
-	apiError := new(APIError)
-	resp, err := s.sling.New().Get("suggest").QueryStruct(params).Receive(items, apiError)
-	return *items, resp, relevantError(err, *apiError)
+	ae := new(apiError)
+	resp, err := s.sling.New().Get("suggest").QueryStruct(params).Receive(items, ae)
+	return *items, resp, relevantError(err, *ae)
 }

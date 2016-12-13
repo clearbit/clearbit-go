@@ -49,7 +49,7 @@ func newDiscoveryService(sling *sling.Sling) *DiscoveryService {
 // technology, or that are similar to your existing customers.
 func (s *DiscoveryService) Search(params DiscoverySearchParams) (*DiscoveryResults, *http.Response, error) {
 	item := new(DiscoveryResults)
-	apiError := new(APIError)
-	resp, err := s.sling.New().Get("search").QueryStruct(params).Receive(item, apiError)
-	return item, resp, relevantError(err, *apiError)
+	ae := new(apiError)
+	resp, err := s.sling.New().Get("search").QueryStruct(params).Receive(item, ae)
+	return item, resp, relevantError(err, *ae)
 }

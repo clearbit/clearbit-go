@@ -116,16 +116,16 @@ func newPersonService(sling *sling.Sling) *PersonService {
 //Find looks up a person based on a email address
 func (s *PersonService) Find(params PersonFindParams) (*Person, *http.Response, error) {
 	item := new(Person)
-	apiError := new(APIError)
-	resp, err := s.sling.New().Get("people/find").QueryStruct(params).Receive(item, apiError)
-	return item, resp, relevantError(err, *apiError)
+	ae := new(apiError)
+	resp, err := s.sling.New().Get("people/find").QueryStruct(params).Receive(item, ae)
+	return item, resp, relevantError(err, *ae)
 }
 
 //FindCombined looks up a person and company simultaneously based on a email
 //address
 func (s *PersonService) FindCombined(params PersonFindParams) (*PersonCompany, *http.Response, error) {
 	item := new(PersonCompany)
-	apiError := new(APIError)
-	resp, err := s.sling.New().Get("combined/find").QueryStruct(params).Receive(item, apiError)
-	return item, resp, relevantError(err, *apiError)
+	ae := new(apiError)
+	resp, err := s.sling.New().Get("combined/find").QueryStruct(params).Receive(item, ae)
+	return item, resp, relevantError(err, *ae)
 }

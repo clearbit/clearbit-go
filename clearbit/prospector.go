@@ -52,7 +52,7 @@ func newProspectorService(sling *sling.Sling) *ProspectorService {
 // employment role, seniority, and job title.
 func (s *ProspectorService) Search(params ProspectorSearchParams) ([]ProspectorItem, *http.Response, error) {
 	items := new([]ProspectorItem)
-	apiError := new(APIError)
-	resp, err := s.sling.New().Get("search").QueryStruct(params).Receive(items, apiError)
-	return *items, resp, relevantError(err, *apiError)
+	ae := new(apiError)
+	resp, err := s.sling.New().Get("search").QueryStruct(params).Receive(items, ae)
+	return *items, resp, relevantError(err, *ae)
 }
