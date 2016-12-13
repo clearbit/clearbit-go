@@ -22,9 +22,9 @@ type Client struct {
 // Config represents all the parameters available to configure a Clearbit
 // client
 type Config struct {
-	apiKey         string
-	httpClient     *http.Client
-	secondsTimeout int
+	apiKey     string
+	httpClient *http.Client
+	Timeout    time.Duration
 }
 
 // Option is an option passed to the NewClient function used to change
@@ -52,25 +52,25 @@ func WithAPIKey(apiKey string) func(*Config) {
 //
 // This is just an easier way to set the timeout than directly setting it
 // through the withHTTPClient option.
-func WithTimeout(s int) func(*Config) {
+func WithTimeout(s time.Duration) func(*Config) {
 	return func(config *Config) {
-		config.secondsTimeout = s
+		config.Timeout = s
 	}
 }
 
 // NewClient returns a new Client.
 func NewClient(options ...Option) *Client {
 	config := Config{
-		apiKey:         os.Getenv("CLEARBIT_KEY"),
-		httpClient:     &http.Client{},
-		secondsTimeout: 10,
+		apiKey:     os.Getenv("CLEARBIT_KEY"),
+		httpClient: &http.Client{},
+		Timeout:    10 * time.Second,
 	}
 
 	for _, option := range options {
 		option(&config)
 	}
 
-	config.httpClient.Timeout = time.Duration(config.secondsTimeout) * time.Second
+	config.httpClient.Timeout = config.Timeout
 
 	base := sling.New().Client(config.httpClient)
 	base.SetBasicAuth(config.apiKey, "")

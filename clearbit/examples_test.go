@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/clearbit/clearbit-go/clearbit"
 )
@@ -18,7 +19,7 @@ func ExampleNewClient_manuallyConfiguringEverything_output() {
 	client := clearbit.NewClient(
 		clearbit.WithHTTPClient(&http.Client{}),
 		clearbit.WithAPIKey(yourApiKey),
-		clearbit.WithTimeout(20),
+		clearbit.WithTimeout(20*time.Second),
 	)
 
 	_, resp, _ := client.Discovery.Search(clearbit.DiscoverySearchParams{

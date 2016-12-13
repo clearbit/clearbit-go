@@ -16,7 +16,7 @@ You can tap another http.Client with:
 
 If you use the httpClient just to set the timeout you can instead use WithTimeout:
 
-  client := clearbit.NewClient(clearbit.WithTimeout(20))
+  client := clearbit.NewClient(clearbit.WithTimeout(20 * time.Second))
 
 Both can be combined and the order is not important.
 
