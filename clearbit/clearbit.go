@@ -52,9 +52,9 @@ func WithAPIKey(apiKey string) func(*Config) {
 //
 // This is just an easier way to set the timeout than directly setting it
 // through the withHTTPClient option.
-func WithTimeout(s time.Duration) func(*Config) {
+func WithTimeout(d time.Duration) func(*Config) {
 	return func(config *Config) {
-		config.Timeout = s
+		config.Timeout = d
 	}
 }
 
