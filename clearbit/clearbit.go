@@ -4,6 +4,7 @@ import (
 	"github.com/dghubble/sling"
 	"net/http"
 	"os"
+	"time"
 )
 
 // Client is a Clearbit client for making Clearbit API requests.
@@ -18,21 +19,22 @@ type Client struct {
 	Reveal       *RevealService
 }
 
-// Config represents all the parameters available to configure a Clearbit
+// config represents all the parameters available to configure a Clearbit
 // client
-type Config struct {
+type config struct {
 	apiKey     string
 	httpClient *http.Client
+	timeout    time.Duration
 }
 
 // Option is an option passed to the NewClient function used to change
 // the client configuration
-type Option func(*Config)
+type Option func(*config)
 
 // WithHTTPClient sets the optional http.Client we can use to make requests
 func WithHTTPClient(httpClient *http.Client) Option {
-	return func(config *Config) {
-		config.httpClient = httpClient
+	return func(c *config) {
+		c.httpClient = httpClient
 	}
 }
 
@@ -40,22 +42,38 @@ func WithHTTPClient(httpClient *http.Client) Option {
 //
 // When this is not provided we'll default to the `CLEARBIT_KEY` environment
 // variable.
-func WithAPIKey(apiKey string) func(*Config) {
-	return func(config *Config) {
-		config.apiKey = apiKey
+func WithAPIKey(apiKey string) func(*config) {
+	return func(c *config) {
+		c.apiKey = apiKey
+	}
+}
+
+// WithTimeout sets the timeout in seconds directly
+//
+// This is just an easier way to set the timeout than directly setting it
+// through the withHTTPClient option.
+func WithTimeout(d time.Duration) func(*config) {
+	return func(c *config) {
+		c.timeout = d
 	}
 }
 
 // NewClient returns a new Client.
 func NewClient(options ...Option) *Client {
-	config := Config{apiKey: os.Getenv("CLEARBIT_KEY")}
-
-	for _, option := range options {
-		option(&config)
+	c := config{
+		apiKey:     os.Getenv("CLEARBIT_KEY"),
+		httpClient: &http.Client{},
+		timeout:    10 * time.Second,
 	}
 
-	base := sling.New().Client(config.httpClient)
-	base.SetBasicAuth(config.apiKey, "")
+	for _, option := range options {
+		option(&c)
+	}
+
+	c.httpClient.Timeout = c.timeout
+
+	base := sling.New().Client(c.httpClient)
+	base.SetBasicAuth(c.apiKey, "")
 
 	return &Client{
 		Autocomplete: newAutocompleteService(base.New()),
