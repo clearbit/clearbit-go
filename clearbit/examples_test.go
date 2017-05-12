@@ -76,6 +76,22 @@ func ExampleProspectorService_Search_output() {
 	// Output: amit@clearbit.com 200 OK
 }
 
+func ExampleProspectorService_SearchWithRoles_output() {
+	client := clearbit.NewClient(clearbit.WithAPIKey(clearbitApiKey))
+	results, resp, err := client.Prospector.Search(clearbit.ProspectorSearchParams{
+		Domain: "clearbit.com",
+		Roles:  []string{"sales", "engineering"},
+	})
+
+	if err == nil {
+		fmt.Println(len(results), resp.Status)
+	} else {
+		handleError(err, resp)
+	}
+
+	// Output: 5 200 OK
+}
+
 func ExampleCompanyService_Find_output() {
 	client := clearbit.NewClient(clearbit.WithAPIKey(clearbitApiKey))
 	results, resp, err := client.Company.Find(clearbit.CompanyFindParams{

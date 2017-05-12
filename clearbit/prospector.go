@@ -27,11 +27,11 @@ type ProspectorItem struct {
 type ProspectorSearchParams struct {
 	Domain      string   `url:"domain,omitempty"`
 	Role        string   `url:"role,omitempty"`
-	Roles       []string `url:"roles,omitempty"`
+	Roles       []string `url:"roles[],omitempty"`
 	Seniority   string   `url:"seniority,omitempty"`
-	Seniorities []string `url:"seniorities,omitempty"`
+	Seniorities []string `url:"seniorities[],omitempty"`
 	Title       string   `url:"title,omitempty"`
-	Titles      []string `url:"titles,omitempty"`
+	Titles      []string `url:"titles[],omitempty"`
 	Name        string   `url:"name,omitempty"`
 	Limit       int      `url:"limit,omitempty"`
 }
