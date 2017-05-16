@@ -14,11 +14,10 @@ func handleError(err error, resp *http.Response) {
 }
 
 func ExampleNewClient_manuallyConfiguringEverything_output() {
-	yourApiKey := os.Getenv("CLEARBIT_KEY")
-
+	var clearbitApiKey = os.Getenv("CLEARBIT_KEY")
 	client := clearbit.NewClient(
 		clearbit.WithHTTPClient(&http.Client{}),
-		clearbit.WithAPIKey(yourApiKey),
+		clearbit.WithAPIKey(clearbitApiKey),
 		clearbit.WithTimeout(20*time.Second),
 	)
 
@@ -73,7 +72,23 @@ func ExampleProspectorService_Search_output() {
 		handleError(err, resp)
 	}
 
-	// Output: chris@clearbit.com 200 OK
+	// Output: amit@clearbit.com 200 OK
+}
+
+func ExampleProspectorService_SearchWithRoles_output() {
+	client := clearbit.NewClient()
+	results, resp, err := client.Prospector.Search(clearbit.ProspectorSearchParams{
+		Domain: "clearbit.com",
+		Roles:  []string{"sales", "engineering"},
+	})
+
+	if err == nil {
+		fmt.Println(len(results), resp.Status)
+	} else {
+		handleError(err, resp)
+	}
+
+	// Output: 5 200 OK
 }
 
 func ExampleCompanyService_Find_output() {

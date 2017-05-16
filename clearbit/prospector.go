@@ -1,8 +1,9 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
+
+	"github.com/dghubble/sling"
 )
 
 const (
@@ -24,12 +25,15 @@ type ProspectorItem struct {
 // ProspectorSearchParams wraps the parameters needed to interact with the
 // Prospector API
 type ProspectorSearchParams struct {
-	Domain    string `url:"domain,omitempty"`
-	Role      string `url:"role,omitempty"`
-	Seniority string `url:"seniority,omitempty"`
-	Title     string `url:"title,omitempty"`
-	Name      string `url:"name,omitempty"`
-	Limit     int    `url:"limit,omitempty"`
+	Domain      string   `url:"domain,omitempty"`
+	Role        string   `url:"role,omitempty"`
+	Roles       []string `url:"roles[],omitempty"`
+	Seniority   string   `url:"seniority,omitempty"`
+	Seniorities []string `url:"seniorities[],omitempty"`
+	Title       string   `url:"title,omitempty"`
+	Titles      []string `url:"titles[],omitempty"`
+	Name        string   `url:"name,omitempty"`
+	Limit       int      `url:"limit,omitempty"`
 }
 
 // ProspectorService gives access to the Prospector API.
