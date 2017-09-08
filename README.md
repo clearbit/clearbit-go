@@ -1,9 +1,9 @@
-#Clearbit Go Bindings
+# Clearbit Go Bindings
 [![Build Status](https://travis-ci.org/clearbit/clearbit-go.svg?branch=master)](https://travis-ci.org/clearbit/clearbit-go)
 
 Package clearbit provides a client for using the Clearbit API.
 
-##Usage
+## Usage
 
 To use one of the Clearbit APIs you'll first need to create a client by calling the `NewClient` function.
 By default `NewClient` will use a new `http.Client` and will fetch the Clearbit API key from the `CLEARBIT_KEY` environment variable.
