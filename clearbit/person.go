@@ -47,7 +47,7 @@ type Person struct {
 	} `json:"facebook"`
 	GitHub struct {
 		Handle    string `json:"handle"`
-		ID        string `json:"id"`
+		ID        int `json:"id"`
 		Avatar    string `json:"avatar"`
 		Company   string `json:"company"`
 		Blog      string `json:"blog"`
