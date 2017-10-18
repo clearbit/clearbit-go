@@ -1,8 +1,10 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
+	"time"
+
+	"github.com/dghubble/sling"
 )
 
 const (
@@ -29,8 +31,8 @@ type Person struct {
 		StateCode   string  `json:"stateCode"`
 		Country     string  `json:"country"`
 		CountryCode string  `json:"countryCode"`
-		Lat         float32 `json:"lat"`
-		Lng         float32 `json:"lng"`
+		Lat         float64 `json:"lat"`
+		Lng         float64 `json:"lng"`
 	} `json:"geo"`
 	Bio        string `json:"bio"`
 	Site       string `json:"site"`
@@ -47,12 +49,12 @@ type Person struct {
 	} `json:"facebook"`
 	GitHub struct {
 		Handle    string `json:"handle"`
-		ID        int `json:"id"`
+		ID        int    `json:"id"`
 		Avatar    string `json:"avatar"`
 		Company   string `json:"company"`
 		Blog      string `json:"blog"`
-		Followers string `json:"followers"`
-		Following string `json:"following"`
+		Followers int    `json:"followers"`
+		Following int    `json:"following"`
 	} `json:"github"`
 	Twitter struct {
 		Handle    string `json:"handle"`
@@ -74,16 +76,21 @@ type Person struct {
 	} `json:"googleplus"`
 	AboutMe struct {
 		Handle string `json:"handle"`
+		Bio    string `json:"bio"`
+		Avatar string `json:"avatar"`
 	} `json:"aboutme"`
 	Gravatar struct {
-		Handle string `json:"handle"`
+		Handle  string   `json:"handle"`
+		Urls    []string `json:"urls"`
+		Avatar  string   `json:"avatar"`
+		Avatars []struct {
+			URL  string `json:"url"`
+			Type string `json:"type"`
+		} `json:"avatars"`
 	} `json:"gravatar"`
-	Fuzzy         bool   `json:"fuzzy"`
-	EmailProvider bool   `json:"emailProvider"`
-	IndexedAt     string `json:"indexedAt"`
-	Phone         string `json:"phone"`
-	ActiveAt      string `json:"activeAt"`
-	InActiveAt    string `json:"inActiveAt"`
+	Fuzzy         bool      `json:"fuzzy"`
+	EmailProvider bool      `json:"emailProvider"`
+	IndexedAt     time.Time `json:"indexedAt"`
 }
 
 // PersonCompany represents the item returned by a call to FindCombined.
