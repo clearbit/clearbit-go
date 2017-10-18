@@ -1,8 +1,10 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
+	"time"
+
+	"github.com/dghubble/sling"
 )
 
 const (
@@ -29,24 +31,24 @@ type Company struct {
 		SicCode       string `json:"sicCode"`
 		NaicsCode     string `json:"naicsCode"`
 	} `json:"category"`
-	Tags        []string    `json:"tags"`
-	Description string      `json:"description"`
-	FoundedYear int `json:"foundedYear"`
-	Location    string      `json:"location"`
-	TimeZone    string      `json:"timeZone"`
-	UtcOffset   int         `json:"utcOffset"`
+	Tags        []string `json:"tags"`
+	Description string   `json:"description"`
+	FoundedYear int      `json:"foundedYear"`
+	Location    string   `json:"location"`
+	TimeZone    string   `json:"timeZone"`
+	UtcOffset   int      `json:"utcOffset"`
 	Geo         struct {
-		StreetNumber string      `json:"streetNumber"`
-		StreetName   string      `json:"streetName"`
-		SubPremise   string `json:"subPremise"`
-		City         string      `json:"city"`
-		PostalCode   string      `json:"postalCode"`
-		State        string      `json:"state"`
-		StateCode    string      `json:"stateCode"`
-		Country      string      `json:"country"`
-		CountryCode  string      `json:"countryCode"`
-		Lat          float64     `json:"lat"`
-		Lng          float64     `json:"lng"`
+		StreetNumber string  `json:"streetNumber"`
+		StreetName   string  `json:"streetName"`
+		SubPremise   string  `json:"subPremise"`
+		City         string  `json:"city"`
+		PostalCode   string  `json:"postalCode"`
+		State        string  `json:"state"`
+		StateCode    string  `json:"stateCode"`
+		Country      string  `json:"country"`
+		CountryCode  string  `json:"countryCode"`
+		Lat          float64 `json:"lat"`
+		Lng          float64 `json:"lng"`
 	} `json:"geo"`
 	Logo     string `json:"logo"`
 	Facebook struct {
@@ -69,8 +71,8 @@ type Company struct {
 	Crunchbase struct {
 		Handle string `json:"handle"`
 	} `json:"crunchbase"`
-	EmailProvider bool        `json:"emailProvider"`
-	Type          string      `json:"type"`
+	EmailProvider bool   `json:"emailProvider"`
+	Type          string `json:"type"`
 	Ticker        string `json:"ticker"`
 	Identifiers   struct {
 		UsEIN string `json:"usEIN"`
@@ -81,10 +83,10 @@ type Company struct {
 		AlexaGlobalRank        int         `json:"alexaGlobalRank"`
 		Employees              int         `json:"employees"`
 		EmployeesRange         string      `json:"employeesRange"`
-		MarketCap              string `json:"marketCap"`
+		MarketCap              string      `json:"marketCap"`
 		Raised                 int         `json:"raised"`
 		AnnualRevenue          interface{} `json:"annualRevenue"`
-		EstimatedAnnualRevenue int      `json:"estimatedAnnualRevenue"`
+		EstimatedAnnualRevenue int         `json:"estimatedAnnualRevenue"`
 		FiscalYearEnd          interface{} `json:"fiscalYearEnd"`
 	} `json:"metrics"`
 	IndexedAt time.Time `json:"indexedAt"`
@@ -92,7 +94,7 @@ type Company struct {
 	Parent    struct {
 		Domain string `json:"domain"`
 	} `json:"parent"`
-} `json:"company"`
+}
 
 // CompanyFindParams wraps the parameters needed to interact with the Company
 // API through the Find method

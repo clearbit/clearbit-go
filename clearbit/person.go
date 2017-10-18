@@ -1,8 +1,10 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
+	"time"
+
+	"github.com/dghubble/sling"
 )
 
 const (
@@ -37,10 +39,10 @@ type Person struct {
 	Avatar     string `json:"avatar"`
 	Employment struct {
 		Domain    string `json:"domain"`
-		Name      string      `json:"name"`
-		Title     string      `json:"title"`
-		Role      string      `json:"role"`
-		Seniority string      `json:"seniority"`
+		Name      string `json:"name"`
+		Title     string `json:"title"`
+		Role      string `json:"role"`
+		Seniority string `json:"seniority"`
 	} `json:"employment"`
 	Facebook struct {
 		Handle string `json:"handle"`
@@ -78,9 +80,9 @@ type Person struct {
 		Avatar string `json:"avatar"`
 	} `json:"aboutme"`
 	Gravatar struct {
-		Handle  string        `json:"handle"`
+		Handle  string   `json:"handle"`
 		Urls    []string `json:"urls"`
-		Avatar  string        `json:"avatar"`
+		Avatar  string   `json:"avatar"`
 		Avatars []struct {
 			URL  string `json:"url"`
 			Type string `json:"type"`
@@ -89,7 +91,7 @@ type Person struct {
 	Fuzzy         bool      `json:"fuzzy"`
 	EmailProvider bool      `json:"emailProvider"`
 	IndexedAt     time.Time `json:"indexedAt"`
-} `json:"person"`
+}
 
 // PersonCompany represents the item returned by a call to FindCombined.
 // It joins the Person and Company structure.
