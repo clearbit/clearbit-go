@@ -18,6 +18,7 @@ type Client struct {
 	Discovery    *DiscoveryService
 	Prospector   *ProspectorService
 	Reveal       *RevealService
+	Risk         *RiskService
 }
 
 // config represents all the parameters available to configure a Clearbit
@@ -83,5 +84,6 @@ func NewClient(options ...Option) *Client {
 		Discovery:    newDiscoveryService(base.New()),
 		Prospector:   newProspectorService(base.New()),
 		Reveal:       newRevealService(base.New()),
+		Risk:         newRiskService(base.New()),
 	}
 }

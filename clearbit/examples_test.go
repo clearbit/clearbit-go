@@ -30,6 +30,23 @@ func ExampleNewClient_manuallyConfiguringEverything_output() {
 	// Output: 200 OK
 }
 
+func ExampleRiskService_Calculate_output() {
+	client := clearbit.NewClient()
+	results, resp, err := client.Risk.Calculate(clearbit.RiskCalculateParams{
+		Email: "alex@clearbit.com",
+		Name:  "Alex MacCaw",
+		IP:    "127.0.0.1",
+	})
+
+	if err == nil {
+		fmt.Println(results.Risk.Score, resp.Status)
+	} else {
+		handleError(err, resp)
+	}
+
+	// Output: 0 200 OK
+}
+
 func ExampleRevealService_Find_output() {
 	client := clearbit.NewClient()
 	results, resp, err := client.Reveal.Find(clearbit.RevealFindParams{
