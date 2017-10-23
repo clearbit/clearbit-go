@@ -77,6 +77,21 @@ func ExampleAutocompleteService_Suggest_output() {
 	// Output: clearbit.com 200 OK
 }
 
+func ExampleNameToDomainService_Find_output() {
+	client := clearbit.NewClient()
+	result, resp, err := client.NameToDomain.Find(clearbit.NameToDomainFindParams{
+		Name: "Uber",
+	})
+
+	if err == nil {
+		fmt.Println(result.Domain, resp.Status)
+	} else {
+		handleError(err, resp)
+	}
+
+	// Output: uber.com 200 OK
+}
+
 func ExampleProspectorService_Search_output() {
 	client := clearbit.NewClient()
 	results, resp, err := client.Prospector.Search(clearbit.ProspectorSearchParams{
