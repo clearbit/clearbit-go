@@ -85,9 +85,9 @@ type Company struct {
 		EmployeesRange         string      `json:"employeesRange"`
 		MarketCap              string      `json:"marketCap"`
 		Raised                 int         `json:"raised"`
-		AnnualRevenue          interface{} `json:"annualRevenue"`
-		EstimatedAnnualRevenue int         `json:"estimatedAnnualRevenue"`
-		FiscalYearEnd          interface{} `json:"fiscalYearEnd"`
+		AnnualRevenue          int         `json:"annualRevenue"`
+		EstimatedAnnualRevenue string      `json:"estimatedAnnualRevenue"`
+		FiscalYearEnd          int         `json:"fiscalYearEnd"`
 	} `json:"metrics"`
 	IndexedAt time.Time `json:"indexedAt"`
 	Tech      []string  `json:"tech"`
