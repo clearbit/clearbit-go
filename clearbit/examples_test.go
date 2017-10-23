@@ -42,7 +42,7 @@ func ExampleRevealService_Find_output() {
 		handleError(err, resp)
 	}
 
-	// Output: Clearbt 200 OK
+	// Output: Clearbit 200 OK
 }
 
 func ExampleAutocompleteService_Suggest_output() {
@@ -75,7 +75,7 @@ func ExampleProspectorService_Search_output() {
 	// Output: alex@clearbit.com 200 OK
 }
 
-func ExampleProspectorService_SearchWithRoles_output() {
+func ExampleProspectorService_Search_withRoles_Output() {
 	client := clearbit.NewClient()
 	results, resp, err := client.Prospector.Search(clearbit.ProspectorSearchParams{
 		Domain: "clearbit.com",
