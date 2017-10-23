@@ -42,7 +42,7 @@ func ExampleRevealService_Find_output() {
 		handleError(err, resp)
 	}
 
-	// Output: Clearbit 200 OK
+	// Output: Clearbt 200 OK
 }
 
 func ExampleAutocompleteService_Suggest_output() {

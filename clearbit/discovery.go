@@ -1,8 +1,9 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
+
+	"github.com/dghubble/sling"
 )
 
 const (

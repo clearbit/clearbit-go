@@ -1,10 +1,11 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/dghubble/sling"
 )
 
 // Client is a Clearbit client for making Clearbit API requests.
