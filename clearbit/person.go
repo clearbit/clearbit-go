@@ -80,12 +80,12 @@ type Person struct {
 		Avatar string `json:"avatar"`
 	} `json:"aboutme"`
 	Gravatar struct {
-		Handle  string   `json:"handle"`
+		Handle string `json:"handle"`
 		Urls   []struct {
 			URL  string `json:"url"`
 			Type string `json:"type"`
 		} `json:"urls"`
-		Avatar  string   `json:"avatar"`
+		Avatar  string `json:"avatar"`
 		Avatars []struct {
 			URL  string `json:"url"`
 			Type string `json:"type"`

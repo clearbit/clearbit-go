@@ -79,15 +79,15 @@ type Company struct {
 	} `json:"identifiers"`
 	Phone   string `json:"phone"`
 	Metrics struct {
-		AlexaUsRank            int         `json:"alexaUsRank"`
-		AlexaGlobalRank        int         `json:"alexaGlobalRank"`
-		Employees              int         `json:"employees"`
-		EmployeesRange         string      `json:"employeesRange"`
-		MarketCap              string      `json:"marketCap"`
-		Raised                 int         `json:"raised"`
-		AnnualRevenue          int         `json:"annualRevenue"`
-		EstimatedAnnualRevenue string      `json:"estimatedAnnualRevenue"`
-		FiscalYearEnd          int         `json:"fiscalYearEnd"`
+		AlexaUsRank            int    `json:"alexaUsRank"`
+		AlexaGlobalRank        int    `json:"alexaGlobalRank"`
+		Employees              int    `json:"employees"`
+		EmployeesRange         string `json:"employeesRange"`
+		MarketCap              string `json:"marketCap"`
+		Raised                 int    `json:"raised"`
+		AnnualRevenue          int    `json:"annualRevenue"`
+		EstimatedAnnualRevenue string `json:"estimatedAnnualRevenue"`
+		FiscalYearEnd          int    `json:"fiscalYearEnd"`
 	} `json:"metrics"`
 	IndexedAt time.Time `json:"indexedAt"`
 	Tech      []string  `json:"tech"`
