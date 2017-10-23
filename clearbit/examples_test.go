@@ -72,7 +72,7 @@ func ExampleProspectorService_Search_output() {
 		handleError(err, resp)
 	}
 
-	// Output: amit@clearbit.com 200 OK
+	// Output: alex@clearbit.com 200 OK
 }
 
 func ExampleProspectorService_SearchWithRoles_output() {
