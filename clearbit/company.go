@@ -83,7 +83,7 @@ type Company struct {
 		AlexaGlobalRank        int    `json:"alexaGlobalRank"`
 		Employees              int    `json:"employees"`
 		EmployeesRange         string `json:"employeesRange"`
-		MarketCap              string `json:"marketCap"`
+		MarketCap              int    `json:"marketCap"`
 		Raised                 int    `json:"raised"`
 		AnnualRevenue          int    `json:"annualRevenue"`
 		EstimatedAnnualRevenue string `json:"estimatedAnnualRevenue"`
