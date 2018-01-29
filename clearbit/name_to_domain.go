@@ -1,8 +1,9 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
+
+	"github.com/dghubble/sling"
 )
 
 const (
@@ -31,7 +32,7 @@ type NameToDomainService struct {
 	sling     *sling.Sling
 }
 
-func newNameToDomainService(sling *sling.Sling) *NameToDomainService {
+func newNameToDomainService(sling *sling.Sling, c *config) *NameToDomainService {
 	return &NameToDomainService{
 		baseSling: sling.New(),
 		sling:     sling.Base(nameToDomainBase).Path("/v1/"),

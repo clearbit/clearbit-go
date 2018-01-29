@@ -38,7 +38,7 @@ type DiscoveryService struct {
 	sling     *sling.Sling
 }
 
-func newDiscoveryService(sling *sling.Sling) *DiscoveryService {
+func newDiscoveryService(sling *sling.Sling, c *config) *DiscoveryService {
 	return &DiscoveryService{
 		baseSling: sling.New(),
 		sling:     sling.Base(discoveryBase).Path("/v1/companies/"),

@@ -34,7 +34,7 @@ type RevealService struct {
 	sling     *sling.Sling
 }
 
-func newRevealService(sling *sling.Sling) *RevealService {
+func newRevealService(sling *sling.Sling, c *config) *RevealService {
 	return &RevealService{
 		baseSling: sling.New(),
 		sling:     sling.Base(revealBase).Path("/v1/companies/"),

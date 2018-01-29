@@ -109,7 +109,7 @@ type CompanyService struct {
 	sling     *sling.Sling
 }
 
-func newCompanyService(sling *sling.Sling) *CompanyService {
+func newCompanyService(sling *sling.Sling, c *config) *CompanyService {
 	return &CompanyService{
 		baseSling: sling.New(),
 		sling:     sling.Base(companyBase).Path("/v2/companies/"),

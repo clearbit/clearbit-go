@@ -45,7 +45,7 @@ type ProspectorService struct {
 	sling     *sling.Sling
 }
 
-func newProspectorService(sling *sling.Sling) *ProspectorService {
+func newProspectorService(sling *sling.Sling, c *config) *ProspectorService {
 	return &ProspectorService{
 		baseSling: sling.New(),
 		sling:     sling.Base(prospectorBase).Path("/v1/people/"),

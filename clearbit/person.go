@@ -116,7 +116,7 @@ type PersonService struct {
 	sling     *sling.Sling
 }
 
-func newPersonService(sling *sling.Sling) *PersonService {
+func newPersonService(sling *sling.Sling, c *config) *PersonService {
 	return &PersonService{
 		baseSling: sling.New(),
 		sling:     sling.Base(personBase).Path("/v2/"),

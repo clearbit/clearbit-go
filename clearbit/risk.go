@@ -1,8 +1,9 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
+
+	"github.com/dghubble/sling"
 )
 
 const (
@@ -58,7 +59,7 @@ type RiskService struct {
 	sling     *sling.Sling
 }
 
-func newRiskService(sling *sling.Sling) *RiskService {
+func newRiskService(sling *sling.Sling, c *config) *RiskService {
 	return &RiskService{
 		baseSling: sling.New(),
 		sling:     sling.Base(riskBase).Path("/v1/"),
