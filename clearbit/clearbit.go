@@ -28,6 +28,7 @@ type config struct {
 	apiKey     string
 	httpClient *http.Client
 	timeout    time.Duration
+	stream     bool
 }
 
 // Option is an option passed to the NewClient function used to change
@@ -48,6 +49,12 @@ func WithHTTPClient(httpClient *http.Client) Option {
 func WithAPIKey(apiKey string) func(*config) {
 	return func(c *config) {
 		c.apiKey = apiKey
+	}
+}
+
+func WithStream() func(*config) {
+	return func(c *config) {
+		c.stream = true
 	}
 }
 

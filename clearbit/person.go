@@ -8,7 +8,8 @@ import (
 )
 
 const (
-	personBase = "https://person.clearbit.com"
+	personBase       = "https://person.clearbit.com"
+	personBaseStream = "https://person-stream.clearbit.com"
 )
 
 // Person contains all the person fields gathered from the Person json
@@ -117,9 +118,13 @@ type PersonService struct {
 }
 
 func newPersonService(sling *sling.Sling, c *config) *PersonService {
+	baseURL := personBase
+	if c.stream {
+		baseURL = personBaseStream
+	}
 	return &PersonService{
 		baseSling: sling.New(),
-		sling:     sling.Base(personBase).Path("/v2/"),
+		sling:     sling.Base(baseURL).Path("/v2/"),
 	}
 }
 
