@@ -52,5 +52,5 @@ func (s *DiscoveryService) Search(params DiscoverySearchParams) (*DiscoveryResul
 	item := new(DiscoveryResults)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("search").QueryStruct(params).Receive(item, ae)
-	return item, resp, relevantError(err, *ae)
+	return item, resp, relevantError(resp, err, *ae)
 }

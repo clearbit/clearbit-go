@@ -133,7 +133,7 @@ func (s *PersonService) Find(params PersonFindParams) (*Person, *http.Response, 
 	item := new(Person)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("people/find").QueryStruct(params).Receive(item, ae)
-	return item, resp, relevantError(err, *ae)
+	return item, resp, relevantError(resp, err, *ae)
 }
 
 //FindCombined looks up a person and company simultaneously based on a email
@@ -142,5 +142,5 @@ func (s *PersonService) FindCombined(params PersonFindParams) (*PersonCompany, *
 	item := new(PersonCompany)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("combined/find").QueryStruct(params).Receive(item, ae)
-	return item, resp, relevantError(err, *ae)
+	return item, resp, relevantError(resp, err, *ae)
 }

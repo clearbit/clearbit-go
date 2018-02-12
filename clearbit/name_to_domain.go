@@ -44,5 +44,5 @@ func (s *NameToDomainService) Find(params NameToDomainFindParams) (*NameToDomain
 	item := new(NameToDomain)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("domains/find").QueryStruct(params).Receive(item, ae)
-	return item, resp, relevantError(err, *ae)
+	return item, resp, relevantError(resp, err, *ae)
 }

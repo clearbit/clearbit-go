@@ -45,5 +45,5 @@ func (s *AutocompleteService) Suggest(params AutocompleteSuggestParams) ([]Autoc
 	items := new([]AutocompleteItem)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("suggest").QueryStruct(params).Receive(items, ae)
-	return *items, resp, relevantError(err, *ae)
+	return *items, resp, relevantError(resp, err, *ae)
 }

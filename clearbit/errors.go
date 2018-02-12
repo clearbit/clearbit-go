@@ -3,12 +3,14 @@ package clearbit
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 )
 
 // apiError represents a Clearbit API Error response
 // https://clearbit.com/docs#errors
 type apiError struct {
-	Errors []ErrorDetail `json:"error"`
+	HTTPStatus string        `json:"httpStatus"`
+	Errors     []ErrorDetail `json:"error"`
 }
 
 // ErrorDetail represents an individual item in an apiError.
@@ -19,11 +21,17 @@ type ErrorDetail struct {
 
 // ErrorDetail represents an individual item in an apiError.
 func (e apiError) Error() string {
+	msg := e.HTTPStatus
 	if len(e.Errors) > 0 {
 		err := e.Errors[0]
-		return fmt.Sprintf("clearbit: %s %v", err.Type, err.Message)
+		if err.Type != "" || err.Message != "" {
+			msg += fmt.Sprintf(" %s %v", err.Type, err.Message)
+		}
 	}
-	return ""
+	if msg != "" {
+		msg = "clearbit: " + msg
+	}
+	return msg
 }
 
 // UnmarshalJSON is used to be able to read dynamic json
@@ -59,12 +67,15 @@ func (e *apiError) Empty() bool {
 // relevantError returns any non-nil http-related error (creating the request,
 // getting the response, decoding) if any. If the decoded apiError is non-zero
 // the apiError is returned. Otherwise, no errors occurred, returns nil.
-func relevantError(httpError error, ae apiError) error {
+func relevantError(resp *http.Response, httpError error, ae apiError) error {
 	if httpError != nil {
 		return httpError
 	}
 	if ae.Empty() {
 		return nil
+	}
+	if resp.StatusCode != http.StatusOK {
+		ae.HTTPStatus = resp.Status
 	}
 	return ae
 }

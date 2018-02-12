@@ -121,5 +121,5 @@ func (s *CompanyService) Find(params CompanyFindParams) (*Company, *http.Respons
 	item := new(Company)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("find").QueryStruct(params).Receive(item, ae)
-	return item, resp, relevantError(err, *ae)
+	return item, resp, relevantError(resp, err, *ae)
 }

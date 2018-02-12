@@ -58,5 +58,5 @@ func (s *ProspectorService) Search(params ProspectorSearchParams) ([]ProspectorI
 	items := new([]ProspectorItem)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("search").QueryStruct(params).Receive(items, ae)
-	return *items, resp, relevantError(err, *ae)
+	return *items, resp, relevantError(resp, err, *ae)
 }
