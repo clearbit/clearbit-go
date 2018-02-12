@@ -13,6 +13,10 @@ type apiError struct {
 	Errors     []ErrorDetail `json:"error"`
 }
 
+type ErrorDetailWrapper struct {
+	Err ErrorDetail `json:"error"`
+}
+
 // ErrorDetail represents an individual item in an apiError.
 type ErrorDetail struct {
 	Type    string `json:"type"`
@@ -25,7 +29,7 @@ func (e apiError) Error() string {
 	if len(e.Errors) > 0 {
 		err := e.Errors[0]
 		if err.Type != "" || err.Message != "" {
-			msg += fmt.Sprintf(" %s %v", err.Type, err.Message)
+			msg += fmt.Sprintf(" type=%s message=%v", err.Type, err.Message)
 		}
 	}
 	if msg != "" {
@@ -38,21 +42,22 @@ func (e apiError) Error() string {
 //
 // This is because sometimes our errors are not arrays of ErrorDetail but a
 // single ErrorDetail
-func (e *apiError) UnmarshalJSON(b []byte) (err error) {
-	errorDetail, errors := ErrorDetail{}, []ErrorDetail{}
-	if err = json.Unmarshal(b, &errors); err == nil {
+func (e *apiError) UnmarshalJSON(b []byte) error {
+	errorWrapper := ErrorDetailWrapper{}
+	errors := []ErrorDetail{}
+
+	if tmpErr := json.Unmarshal(b, &errorWrapper); tmpErr == nil { // && errorDetail.Type != ""
+		errors = append(errors, errorWrapper.Err)
 		e.Errors = errors
-		return
+		return nil
 	}
 
-	if err = json.Unmarshal(b, &errorDetail); err == nil {
-		errors = append(errors, errorDetail)
+	if tmpErr := json.Unmarshal(b, &errors); tmpErr == nil {
 		e.Errors = errors
-		return
+		return nil
 	}
 
-	fmt.Println(err)
-	return err
+	return nil
 }
 
 // Empty returns true if empty. Otherwise, at least 1 error message/code is
