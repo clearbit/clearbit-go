@@ -17,6 +17,11 @@ type ErrorDetail struct {
 	Message string `json:"message"`
 }
 
+// ErrorDetailWrapper is used for single error
+type ErrorDetailWrapper struct {
+	Error ErrorDetail `json:"error"`
+}
+
 // ErrorDetail represents an individual item in an apiError.
 func (e apiError) Error() string {
 	if len(e.Errors) > 0 {
@@ -31,19 +36,18 @@ func (e apiError) Error() string {
 // This is because sometimes our errors are not arrays of ErrorDetail but a
 // single ErrorDetail
 func (e *apiError) UnmarshalJSON(b []byte) (err error) {
-	errorDetail, errors := ErrorDetail{}, []ErrorDetail{}
+	errorDetail, errors := ErrorDetailWrapper{}, []ErrorDetail{}
 	if err = json.Unmarshal(b, &errors); err == nil {
 		e.Errors = errors
 		return
 	}
 
 	if err = json.Unmarshal(b, &errorDetail); err == nil {
-		errors = append(errors, errorDetail)
+		errors = append(errors, errorDetail.Error)
 		e.Errors = errors
 		return
 	}
 
-	fmt.Println(err)
 	return err
 }
 
