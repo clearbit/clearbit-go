@@ -99,7 +99,7 @@ func ExampleProspectorService_Search_output() {
 	})
 
 	if err == nil {
-		fmt.Println(results[0].Email, resp.Status)
+		fmt.Println(results.Results[0].Email, resp.Status)
 	} else {
 		handleError(err, resp)
 	}
@@ -115,7 +115,7 @@ func ExampleProspectorService_Search_withRoles_Output() {
 	})
 
 	if err == nil {
-		fmt.Println(len(results), resp.Status)
+		fmt.Println(len(results.Results), resp.Status)
 	} else {
 		handleError(err, resp)
 	}
