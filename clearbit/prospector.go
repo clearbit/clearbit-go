@@ -30,6 +30,8 @@ type ProspectorResponse struct {
 		} `json:"company"`
 		Email    string `json:"email"`
 		Location string `json:"location"`
+		Phone    string `json:"phone"`
+		Verified bool   `json:"verified"`
 	} `json:"results"`
 }
 
