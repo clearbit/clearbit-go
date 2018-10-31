@@ -7,10 +7,8 @@ matrix:
   allow_failures:
     - go: tip
   fast_finish: true
-install:
-  - go get github.com/kardianos/govendor
-  - cd clearbit && govendor sync
+install: true
 script:
   - diff -u <(echo -n) <(gofmt -d -s .)
-  - go tool vet .
-  - go test -v -cover -race ./...
+  - env GO111MODULE=on go tool vet .
+  - env GO111MODULE=on go test -v -cover -race ./...
