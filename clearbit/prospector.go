@@ -46,8 +46,8 @@ type ProspectorSearchParams struct {
 	Title       string   `url:"title,omitempty"`
 	Titles      []string `url:"titles[],omitempty"`
 	Name        string   `url:"name,omitempty"`
-	Limit       int      `url:"limit,omitempty"`
 	Page        int      `url:"page,omitempty"`
+	PageSize    int      `url:"page_size,omitempty"`
 	Location    int      `url:"location,omitempty"`
 }
 
