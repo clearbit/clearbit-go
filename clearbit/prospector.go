@@ -48,7 +48,7 @@ type ProspectorService struct {
 func newProspectorService(sling *sling.Sling) *ProspectorService {
 	return &ProspectorService{
 		baseSling: sling.New(),
-    sling:     sling.Base(prospectorBase).Path("/v1/people/").Set("Api-Version", "2016-10-04"),
+		sling:     sling.Base(prospectorBase).Path("/v1/people/").Set("Api-Version", "2016-10-04"),
 	}
 }
 
