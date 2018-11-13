@@ -8,7 +8,7 @@ import (
 
 const (
 	prospectorBase = "https://prospector.clearbit.com"
-	apiVersion     = "2016-10-04"
+	apiVersion     = "2018-08-15"
 )
 
 type ProspectorResponse struct {
@@ -45,10 +45,15 @@ type ProspectorSearchParams struct {
 	Seniorities []string `url:"seniorities[],omitempty"`
 	Title       string   `url:"title,omitempty"`
 	Titles      []string `url:"titles[],omitempty"`
+	City        string   `url:"city,omitempty"`
+	Cities      []string `url:"cities[],omitempty"`
+	State       string   `url:"state,omitempty"`
+	States      []string `url:"states[],omitempty"`
+	Country     string   `url:"country,omitempty"`
+	Countries   []string `url:"countries[],omitempty"`
 	Name        string   `url:"name,omitempty"`
 	Page        int      `url:"page,omitempty"`
 	PageSize    int      `url:"page_size,omitempty"`
-	Location    int      `url:"location,omitempty"`
 }
 
 // ProspectorService gives access to the Prospector API.
