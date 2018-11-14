@@ -8,6 +8,7 @@ import (
 
 const (
 	prospectorBase = "https://prospector.clearbit.com"
+	apiVersion     = "2016-10-04"
 )
 
 // ProspectorItem represents each of the items returned by a call to Search
@@ -48,7 +49,7 @@ type ProspectorService struct {
 func newProspectorService(sling *sling.Sling) *ProspectorService {
 	return &ProspectorService{
 		baseSling: sling.New(),
-		sling:     sling.Base(prospectorBase).Path("/v1/people/"),
+		sling:     sling.Base(prospectorBase).Path("/v1/people/").Set("Api-Version", apiVersion),
 	}
 }
 
