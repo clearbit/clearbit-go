@@ -38,7 +38,7 @@ type DiscoveryService struct {
 	sling     *sling.Sling
 }
 
-func newDiscoveryService(sling *sling.Sling) *DiscoveryService {
+func newDiscoveryService(sling *sling.Sling, c *config) *DiscoveryService {
 	return &DiscoveryService{
 		baseSling: sling.New(),
 		sling:     sling.Base(discoveryBase).Path("/v1/companies/"),
@@ -52,5 +52,5 @@ func (s *DiscoveryService) Search(params DiscoverySearchParams) (*DiscoveryResul
 	item := new(DiscoveryResults)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("search").QueryStruct(params).Receive(item, ae)
-	return item, resp, relevantError(err, *ae)
+	return item, resp, relevantError(resp, err, *ae)
 }

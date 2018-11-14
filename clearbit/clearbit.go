@@ -28,6 +28,7 @@ type config struct {
 	apiKey     string
 	httpClient *http.Client
 	timeout    time.Duration
+	stream     bool
 }
 
 // Option is an option passed to the NewClient function used to change
@@ -51,6 +52,12 @@ func WithAPIKey(apiKey string) func(*config) {
 	}
 }
 
+func WithStream() func(*config) {
+	return func(c *config) {
+		c.stream = true
+	}
+}
+
 // WithTimeout sets the http timeout
 //
 // This is just an easier way to set the timeout than directly setting it
@@ -63,14 +70,14 @@ func WithTimeout(d time.Duration) func(*config) {
 
 // NewClient returns a new Client.
 func NewClient(options ...Option) *Client {
-	c := config{
+	c := &config{
 		apiKey:     os.Getenv("CLEARBIT_KEY"),
 		httpClient: &http.Client{},
 		timeout:    10 * time.Second,
 	}
 
 	for _, option := range options {
-		option(&c)
+		option(c)
 	}
 
 	c.httpClient.Timeout = c.timeout
@@ -79,13 +86,13 @@ func NewClient(options ...Option) *Client {
 	base.SetBasicAuth(c.apiKey, "")
 
 	return &Client{
-		Autocomplete: newAutocompleteService(base.New()),
-		Person:       newPersonService(base.New()),
-		Company:      newCompanyService(base.New()),
-		Discovery:    newDiscoveryService(base.New()),
-		Prospector:   newProspectorService(base.New()),
-		Reveal:       newRevealService(base.New()),
-		Risk:         newRiskService(base.New()),
-		NameToDomain: newNameToDomainService(base.New()),
+		Autocomplete: newAutocompleteService(base.New(), c),
+		Person:       newPersonService(base.New(), c),
+		Company:      newCompanyService(base.New(), c),
+		Discovery:    newDiscoveryService(base.New(), c),
+		Prospector:   newProspectorService(base.New(), c),
+		Reveal:       newRevealService(base.New(), c),
+		Risk:         newRiskService(base.New(), c),
+		NameToDomain: newNameToDomainService(base.New(), c),
 	}
 }

@@ -34,7 +34,7 @@ type RevealService struct {
 	sling     *sling.Sling
 }
 
-func newRevealService(sling *sling.Sling) *RevealService {
+func newRevealService(sling *sling.Sling, c *config) *RevealService {
 	return &RevealService{
 		baseSling: sling.New(),
 		sling:     sling.Base(revealBase).Path("/v1/companies/"),
@@ -46,5 +46,5 @@ func (s *RevealService) Find(params RevealFindParams) (*Reveal, *http.Response, 
 	item := new(Reveal)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("find").QueryStruct(params).Receive(item, ae)
-	return item, resp, relevantError(err, *ae)
+	return item, resp, relevantError(resp, err, *ae)
 }

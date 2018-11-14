@@ -8,7 +8,8 @@ import (
 )
 
 const (
-	personBase = "https://person.clearbit.com"
+	personBase       = "https://person.clearbit.com"
+	personBaseStream = "https://person-stream.clearbit.com"
 )
 
 // Person contains all the person fields gathered from the Person json
@@ -116,10 +117,14 @@ type PersonService struct {
 	sling     *sling.Sling
 }
 
-func newPersonService(sling *sling.Sling) *PersonService {
+func newPersonService(sling *sling.Sling, c *config) *PersonService {
+	baseURL := personBase
+	if c.stream {
+		baseURL = personBaseStream
+	}
 	return &PersonService{
 		baseSling: sling.New(),
-		sling:     sling.Base(personBase).Path("/v2/"),
+		sling:     sling.Base(baseURL).Path("/v2/"),
 	}
 }
 
@@ -128,7 +133,7 @@ func (s *PersonService) Find(params PersonFindParams) (*Person, *http.Response, 
 	item := new(Person)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("people/find").QueryStruct(params).Receive(item, ae)
-	return item, resp, relevantError(err, *ae)
+	return item, resp, relevantError(resp, err, *ae)
 }
 
 //FindCombined looks up a person and company simultaneously based on a email
@@ -137,5 +142,5 @@ func (s *PersonService) FindCombined(params PersonFindParams) (*PersonCompany, *
 	item := new(PersonCompany)
 	ae := new(apiError)
 	resp, err := s.sling.New().Get("combined/find").QueryStruct(params).Receive(item, ae)
-	return item, resp, relevantError(err, *ae)
+	return item, resp, relevantError(resp, err, *ae)
 }

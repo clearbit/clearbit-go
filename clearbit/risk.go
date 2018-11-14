@@ -1,8 +1,9 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
+
+	"github.com/dghubble/sling"
 )
 
 const (
@@ -58,7 +59,7 @@ type RiskService struct {
 	sling     *sling.Sling
 }
 
-func newRiskService(sling *sling.Sling) *RiskService {
+func newRiskService(sling *sling.Sling, c *config) *RiskService {
 	return &RiskService{
 		baseSling: sling.New(),
 		sling:     sling.Base(riskBase).Path("/v1/"),
@@ -71,5 +72,5 @@ func (s *RiskService) Calculate(params RiskCalculateParams) (*Risk, *http.Respon
 	item := new(Risk)
 	ae := new(apiError)
 	resp, err := s.sling.New().Post("calculate").QueryStruct(params).Receive(item, ae)
-	return item, resp, relevantError(err, *ae)
+	return item, resp, relevantError(resp, err, *ae)
 }
