@@ -1,5 +1,5 @@
 # Clearbit Go Bindings
-[![Build Status](https://travis-ci.org/clearbit/clearbit-go.svg?branch=master)](https://travis-ci.org/clearbit/clearbit-go)
+[![Build Status](https://travis-ci.org/clearbit/clearbit-go.svg?branch=master)](https://travis-ci.org/clearbit/clearbit-go) [![GoDoc](https://godoc.org/github.com/clearbit/clearbit-go?status.svg)](https://godoc.org/github.com/clearbit/clearbit-go)
 
 Package clearbit provides a client for using the Clearbit API.
 
