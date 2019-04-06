@@ -32,8 +32,9 @@ type Risk struct {
 		RateLimited interface{} `json:"rateLimited"`
 	} `json:"ip"`
 	Risk struct {
-		Level string `json:"level"`
-		Score int    `json:"score"`
+		Level   string   `json:"level"`
+		Score   int      `json:"score"`
+		Reasons []string `json:"reasons"`
 	} `json:"risk"`
 }
 
