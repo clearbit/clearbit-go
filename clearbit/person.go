@@ -7,10 +7,6 @@ import (
 	"github.com/dghubble/sling"
 )
 
-const (
-	personBase = "https://person.clearbit.com"
-)
-
 // Person contains all the person fields gathered from the Person json
 // structure. https://dashboard.clearbit.com/docs#enrichment-api-person-api
 type Person struct {
@@ -116,10 +112,10 @@ type PersonService struct {
 	sling     *sling.Sling
 }
 
-func newPersonService(sling *sling.Sling) *PersonService {
+func newPersonService(sling *sling.Sling, baseURL string) *PersonService {
 	return &PersonService{
 		baseSling: sling.New(),
-		sling:     sling.Base(personBase).Path("/v2/"),
+		sling:     sling.Base(baseURL).Path("/v2/"),
 	}
 }
 

@@ -1,12 +1,9 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
-)
 
-const (
-	nameToDomainBase = "https://company.clearbit.com"
+	"github.com/dghubble/sling"
 )
 
 // NameToDomain represents the company returned by a call to Find
@@ -31,10 +28,10 @@ type NameToDomainService struct {
 	sling     *sling.Sling
 }
 
-func newNameToDomainService(sling *sling.Sling) *NameToDomainService {
+func newNameToDomainService(sling *sling.Sling, baseURL string) *NameToDomainService {
 	return &NameToDomainService{
 		baseSling: sling.New(),
-		sling:     sling.Base(nameToDomainBase).Path("/v1/"),
+		sling:     sling.Base(baseURL).Path("/v1/"),
 	}
 }
 

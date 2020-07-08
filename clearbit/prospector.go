@@ -7,8 +7,7 @@ import (
 )
 
 const (
-	prospectorBase = "https://prospector.clearbit.com"
-	apiVersion     = "2018-08-15"
+	apiVersion = "2018-08-15"
 )
 
 type ProspectorResponse struct {
@@ -65,10 +64,10 @@ type ProspectorService struct {
 	sling     *sling.Sling
 }
 
-func newProspectorService(sling *sling.Sling) *ProspectorService {
+func newProspectorService(sling *sling.Sling, baseURL string) *ProspectorService {
 	return &ProspectorService{
 		baseSling: sling.New(),
-		sling:     sling.Base(prospectorBase).Path("/v1/people/").Set("Api-Version", apiVersion),
+		sling:     sling.Base(baseURL).Path("/v1/people/").Set("Api-Version", apiVersion),
 	}
 }
 

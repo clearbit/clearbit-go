@@ -6,10 +6,6 @@ import (
 	"github.com/dghubble/sling"
 )
 
-const (
-	revealBase = "https://reveal.clearbit.com"
-)
-
 // Reveal reprents the company returned by a call to Find
 type Reveal struct {
 	IP    string `json:"ip"`
@@ -34,10 +30,10 @@ type RevealService struct {
 	sling     *sling.Sling
 }
 
-func newRevealService(sling *sling.Sling) *RevealService {
+func newRevealService(sling *sling.Sling, baseURL string) *RevealService {
 	return &RevealService{
 		baseSling: sling.New(),
-		sling:     sling.Base(revealBase).Path("/v1/companies/"),
+		sling:     sling.Base(baseURL).Path("/v1/companies/"),
 	}
 }
 

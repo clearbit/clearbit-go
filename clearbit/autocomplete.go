@@ -6,10 +6,6 @@ import (
 	"github.com/dghubble/sling"
 )
 
-const (
-	autoCompleteBase = "https://autocomplete.clearbit.com"
-)
-
 // AutocompleteItem represents each of the items returned by a call to Suggest
 type AutocompleteItem struct {
 	Domain string `json:"domain"`
@@ -32,10 +28,10 @@ type AutocompleteService struct {
 	sling     *sling.Sling
 }
 
-func newAutocompleteService(sling *sling.Sling) *AutocompleteService {
+func newAutocompleteService(sling *sling.Sling, baseURL string) *AutocompleteService {
 	return &AutocompleteService{
 		baseSling: sling.New(),
-		sling:     sling.Base(autoCompleteBase).Path("/v1/companies/").Set("Authorization", ""),
+		sling:     sling.Base(baseURL).Path("/v1/companies/").Set("Authorization", ""),
 	}
 }
 

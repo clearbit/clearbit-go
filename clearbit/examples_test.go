@@ -3,7 +3,8 @@ package clearbit_test
 import (
 	"fmt"
 	"net/http"
-	"os"
+	"net/http/httptest"
+	"strings"
 	"time"
 
 	"github.com/clearbit/clearbit-go/clearbit"
@@ -13,12 +14,134 @@ func handleError(err error, resp *http.Response) {
 	fmt.Printf("%#v\n%s\n", err, resp.Status)
 }
 
+func mockClearbitServer() *httptest.Server {
+	return httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// mock combined response
+		if strings.Contains(r.URL.Path, "/v2/combined/find") {
+			time.Sleep(5 * time.Second)
+			w.Write([]byte(`{
+				"person": {
+					"name": {
+						"fullName": "Alex MacCaw"
+					}
+				},
+				"company": {
+					"name": "Clearbit"
+				}
+			  }`))
+			return
+		}
+
+		// mock person response
+		if strings.Contains(r.URL.Path, "/v2/people/find") {
+			time.Sleep(5 * time.Second)
+			w.Write([]byte(`{
+				"name": {
+					"fullName": "Alex MacCaw"
+				}
+			  }`))
+			return
+		}
+
+		// mock discovery response
+		if strings.Contains(r.URL.Path, "/v1/companies/search") {
+			time.Sleep(5 * time.Second)
+			w.Write([]byte(`{
+				"results": [
+					{
+						"domain": "clearbit.com"
+					}
+				]
+			  }`))
+			return
+		}
+
+		// mock company response
+		if strings.Contains(r.URL.Path, "/v2/companies/find") {
+			time.Sleep(5 * time.Second)
+			w.Write([]byte(`{
+				"name": "Clearbit"
+			  }`))
+			return
+		}
+
+		if strings.Contains(r.URL.Path, "/v1/people/search") {
+			// mock prospector with roles param response
+			if _, ok := r.URL.Query()["roles[]"]; ok {
+				time.Sleep(5 * time.Second)
+				w.Write([]byte(`{
+					"results": [
+						{"role": "sales"},
+						{"role": "sales"},
+						{"role": "engineering"},
+						{"role": "engineering"},
+						{"role": "sales"}
+					]
+				  }`))
+				return
+			}
+
+			// mock prospector without roles param response
+			time.Sleep(5 * time.Second)
+			w.Write([]byte(`{
+				"results": [
+					{"email": "alex@clearbit.com"}
+				]
+			  }`))
+			return
+		}
+
+		// mock autocomplete response
+		if strings.Contains(r.URL.Path, "/v1/companies/suggest") {
+			time.Sleep(5 * time.Second)
+			w.Write([]byte(`[
+				{"domain": "clearbit.com"}
+			  ]`))
+			return
+		}
+
+		// mock name to domain response
+		if strings.Contains(r.URL.Path, "/v1/domains/find") {
+			time.Sleep(5 * time.Second)
+			w.Write([]byte(`{
+				"domain": "uber.com"
+			  }`))
+			return
+		}
+
+		// mock reveal response
+		if strings.Contains(r.URL.Path, "/v1/companies/find") {
+			time.Sleep(5 * time.Second)
+			w.Write([]byte(`{
+				"company": {
+					"name": "Clearbit"
+				}
+			  }`))
+			return
+		}
+
+		// mock risk response
+		if strings.Contains(r.URL.Path, "/v1/calculate") {
+			time.Sleep(5 * time.Second)
+			w.Write([]byte(`{
+				"risk": {
+					"score": 0
+				}
+			  }`))
+			return
+		}
+
+		w.WriteHeader(http.StatusNotFound)
+	}))
+}
+
+var clearbitServer = mockClearbitServer()
+
 func ExampleNewClient_manuallyConfiguringEverything_output() {
-	var clearbitApiKey = os.Getenv("CLEARBIT_KEY")
 	client := clearbit.NewClient(
 		clearbit.WithHTTPClient(&http.Client{}),
-		clearbit.WithAPIKey(clearbitApiKey),
 		clearbit.WithTimeout(20*time.Second),
+		clearbit.WithBaseURLs(map[string]string{"discovery": clearbitServer.URL}),
 	)
 
 	_, resp, _ := client.Discovery.Search(clearbit.DiscoverySearchParams{
@@ -31,7 +154,7 @@ func ExampleNewClient_manuallyConfiguringEverything_output() {
 }
 
 func ExampleRiskService_Calculate_output() {
-	client := clearbit.NewClient()
+	client := clearbit.NewClient(clearbit.WithBaseURLs(map[string]string{"risk": clearbitServer.URL}))
 	results, resp, err := client.Risk.Calculate(clearbit.RiskCalculateParams{
 		Email: "alex@clearbit.com",
 		Name:  "Alex MacCaw",
@@ -48,7 +171,7 @@ func ExampleRiskService_Calculate_output() {
 }
 
 func ExampleRevealService_Find_output() {
-	client := clearbit.NewClient()
+	client := clearbit.NewClient(clearbit.WithBaseURLs(map[string]string{"reveal": clearbitServer.URL}))
 	results, resp, err := client.Reveal.Find(clearbit.RevealFindParams{
 		IP: "104.193.168.24",
 	})
@@ -63,7 +186,7 @@ func ExampleRevealService_Find_output() {
 }
 
 func ExampleAutocompleteService_Suggest_output() {
-	client := clearbit.NewClient()
+	client := clearbit.NewClient(clearbit.WithBaseURLs(map[string]string{"autocomplete": clearbitServer.URL}))
 	results, resp, err := client.Autocomplete.Suggest(clearbit.AutocompleteSuggestParams{
 		Query: "clearbit",
 	})
@@ -78,7 +201,7 @@ func ExampleAutocompleteService_Suggest_output() {
 }
 
 func ExampleNameToDomainService_Find_output() {
-	client := clearbit.NewClient()
+	client := clearbit.NewClient(clearbit.WithBaseURLs(map[string]string{"nameToDomain": clearbitServer.URL}))
 	result, resp, err := client.NameToDomain.Find(clearbit.NameToDomainFindParams{
 		Name: "Uber",
 	})
@@ -93,7 +216,7 @@ func ExampleNameToDomainService_Find_output() {
 }
 
 func ExampleProspectorService_Search_output() {
-	client := clearbit.NewClient()
+	client := clearbit.NewClient(clearbit.WithBaseURLs(map[string]string{"prospector": clearbitServer.URL}))
 	results, resp, err := client.Prospector.Search(clearbit.ProspectorSearchParams{
 		Domain: "clearbit.com",
 	})
@@ -108,7 +231,7 @@ func ExampleProspectorService_Search_output() {
 }
 
 func ExampleProspectorService_Search_withRoles_Output() {
-	client := clearbit.NewClient()
+	client := clearbit.NewClient(clearbit.WithBaseURLs(map[string]string{"prospector": clearbitServer.URL}))
 	results, resp, err := client.Prospector.Search(clearbit.ProspectorSearchParams{
 		Domain: "clearbit.com",
 		Roles:  []string{"sales", "engineering"},
@@ -124,7 +247,7 @@ func ExampleProspectorService_Search_withRoles_Output() {
 }
 
 func ExampleCompanyService_Find_output() {
-	client := clearbit.NewClient()
+	client := clearbit.NewClient(clearbit.WithBaseURLs(map[string]string{"company": clearbitServer.URL}))
 	results, resp, err := client.Company.Find(clearbit.CompanyFindParams{
 		Domain: "clearbit.com",
 	})
@@ -139,7 +262,7 @@ func ExampleCompanyService_Find_output() {
 }
 
 func ExamplePersonService_Find_output() {
-	client := clearbit.NewClient()
+	client := clearbit.NewClient(clearbit.WithBaseURLs(map[string]string{"person": clearbitServer.URL}))
 	results, resp, err := client.Person.Find(clearbit.PersonFindParams{
 		Email: "alex@clearbit.com",
 	})
@@ -154,7 +277,7 @@ func ExamplePersonService_Find_output() {
 }
 
 func ExamplePersonService_FindCombined_output() {
-	client := clearbit.NewClient()
+	client := clearbit.NewClient(clearbit.WithBaseURLs(map[string]string{"person": clearbitServer.URL}))
 	results, resp, err := client.Person.FindCombined(clearbit.PersonFindParams{
 		Email: "alex@clearbit.com",
 	})
@@ -169,7 +292,7 @@ func ExamplePersonService_FindCombined_output() {
 }
 
 func ExampleDiscoveryService_Search_output() {
-	client := clearbit.NewClient()
+	client := clearbit.NewClient(clearbit.WithBaseURLs(map[string]string{"discovery": clearbitServer.URL}))
 	results, resp, err := client.Discovery.Search(clearbit.DiscoverySearchParams{
 		Query: "name:clearbit",
 	})

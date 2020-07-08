@@ -10,5 +10,5 @@ matrix:
 install: true
 script:
   - diff -u <(echo -n) <(gofmt -d -s .)
-  - env GO111MODULE=on go tool vet .
+  - env GO111MODULE=on go vet ./...
   - env GO111MODULE=on go test -v -cover -race ./...
