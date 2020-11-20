@@ -6,10 +6,6 @@ import (
 	"github.com/dghubble/sling"
 )
 
-const (
-	discoveryBase = "https://discovery.clearbit.com"
-)
-
 // DiscoverySearchParams wraps the parameters needed to interact with the
 // Discovery API through the Search method
 type DiscoverySearchParams struct {
@@ -38,10 +34,10 @@ type DiscoveryService struct {
 	sling     *sling.Sling
 }
 
-func newDiscoveryService(sling *sling.Sling) *DiscoveryService {
+func newDiscoveryService(sling *sling.Sling, baseURL string) *DiscoveryService {
 	return &DiscoveryService{
 		baseSling: sling.New(),
-		sling:     sling.Base(discoveryBase).Path("/v1/companies/"),
+		sling:     sling.Base(baseURL).Path("/v1/companies/"),
 	}
 }
 

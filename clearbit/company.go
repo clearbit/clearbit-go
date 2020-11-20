@@ -7,10 +7,6 @@ import (
 	"github.com/dghubble/sling"
 )
 
-const (
-	companyBase = "https://company.clearbit.com"
-)
-
 // Company contains all the company fields gathered from the Company json
 // structure. https://dashboard.clearbit.com/docs#enrichment-api-company-api
 type Company struct {
@@ -109,10 +105,10 @@ type CompanyService struct {
 	sling     *sling.Sling
 }
 
-func newCompanyService(sling *sling.Sling) *CompanyService {
+func newCompanyService(sling *sling.Sling, baseURL string) *CompanyService {
 	return &CompanyService{
 		baseSling: sling.New(),
-		sling:     sling.Base(companyBase).Path("/v2/companies/"),
+		sling:     sling.Base(baseURL).Path("/v2/companies/"),
 	}
 }
 

@@ -1,12 +1,9 @@
 package clearbit
 
 import (
-	"github.com/dghubble/sling"
 	"net/http"
-)
 
-const (
-	riskBase = "https://risk.clearbit.com"
+	"github.com/dghubble/sling"
 )
 
 // Risk represents the risk score returned by a call to Calculate
@@ -59,10 +56,10 @@ type RiskService struct {
 	sling     *sling.Sling
 }
 
-func newRiskService(sling *sling.Sling) *RiskService {
+func newRiskService(sling *sling.Sling, baseURL string) *RiskService {
 	return &RiskService{
 		baseSling: sling.New(),
-		sling:     sling.Base(riskBase).Path("/v1/"),
+		sling:     sling.Base(baseURL).Path("/v1/"),
 	}
 }
 
