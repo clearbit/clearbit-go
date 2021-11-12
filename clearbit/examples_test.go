@@ -19,7 +19,7 @@ func mockClearbitServer() *httptest.Server {
 		// mock combined response
 		if strings.Contains(r.URL.Path, "/v2/combined/find") {
 			time.Sleep(5 * time.Second)
-			w.Write([]byte(`{
+			_, _ = w.Write([]byte(`{
 				"person": {
 					"name": {
 						"fullName": "Alex MacCaw"
@@ -35,7 +35,7 @@ func mockClearbitServer() *httptest.Server {
 		// mock person response
 		if strings.Contains(r.URL.Path, "/v2/people/find") {
 			time.Sleep(5 * time.Second)
-			w.Write([]byte(`{
+			_, _ = w.Write([]byte(`{
 				"name": {
 					"fullName": "Alex MacCaw"
 				}
@@ -46,7 +46,7 @@ func mockClearbitServer() *httptest.Server {
 		// mock discovery response
 		if strings.Contains(r.URL.Path, "/v1/companies/search") {
 			time.Sleep(5 * time.Second)
-			w.Write([]byte(`{
+			_, _ = w.Write([]byte(`{
 				"results": [
 					{
 						"domain": "clearbit.com"
@@ -59,7 +59,7 @@ func mockClearbitServer() *httptest.Server {
 		// mock company response
 		if strings.Contains(r.URL.Path, "/v2/companies/find") {
 			time.Sleep(5 * time.Second)
-			w.Write([]byte(`{
+			_, _ = w.Write([]byte(`{
 				"name": "Clearbit"
 			  }`))
 			return
@@ -69,7 +69,7 @@ func mockClearbitServer() *httptest.Server {
 			// mock prospector with roles param response
 			if _, ok := r.URL.Query()["roles[]"]; ok {
 				time.Sleep(5 * time.Second)
-				w.Write([]byte(`{
+				_, _ = w.Write([]byte(`{
 					"results": [
 						{"role": "sales"},
 						{"role": "sales"},
@@ -83,7 +83,7 @@ func mockClearbitServer() *httptest.Server {
 
 			// mock prospector without roles param response
 			time.Sleep(5 * time.Second)
-			w.Write([]byte(`{
+			_, _ = w.Write([]byte(`{
 				"results": [
 					{"email": "alex@clearbit.com"}
 				]
@@ -94,7 +94,7 @@ func mockClearbitServer() *httptest.Server {
 		// mock autocomplete response
 		if strings.Contains(r.URL.Path, "/v1/companies/suggest") {
 			time.Sleep(5 * time.Second)
-			w.Write([]byte(`[
+			_, _ = w.Write([]byte(`[
 				{"domain": "clearbit.com"}
 			  ]`))
 			return
@@ -103,7 +103,7 @@ func mockClearbitServer() *httptest.Server {
 		// mock name to domain response
 		if strings.Contains(r.URL.Path, "/v1/domains/find") {
 			time.Sleep(5 * time.Second)
-			w.Write([]byte(`{
+			_, _ = w.Write([]byte(`{
 				"domain": "uber.com"
 			  }`))
 			return
@@ -112,7 +112,7 @@ func mockClearbitServer() *httptest.Server {
 		// mock reveal response
 		if strings.Contains(r.URL.Path, "/v1/companies/find") {
 			time.Sleep(5 * time.Second)
-			w.Write([]byte(`{
+			_, _ = w.Write([]byte(`{
 				"company": {
 					"name": "Clearbit"
 				}
@@ -123,7 +123,7 @@ func mockClearbitServer() *httptest.Server {
 		// mock risk response
 		if strings.Contains(r.URL.Path, "/v1/calculate") {
 			time.Sleep(5 * time.Second)
-			w.Write([]byte(`{
+			_, _ = w.Write([]byte(`{
 				"risk": {
 					"score": 0
 				}
