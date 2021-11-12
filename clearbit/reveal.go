@@ -6,13 +6,13 @@ import (
 	"github.com/dghubble/sling"
 )
 
-// Reveal reprents the company returned by a call to Find
+// Reveal represents the company returned by a call to Find
 type Reveal struct {
-	IP    string `json:"ip"`
-	Fuzzy bool   `json:"fuzzy"`
-
-	Domain  string `json:"domain"`
-	Company Company
+	IP              string `json:"ip"`
+	Fuzzy           bool   `json:"fuzzy"`
+	Domain          string `json:"domain"`
+	Company         Company
+	ConfidenceScore int `json:"confidence_score,omitempty"`
 }
 
 // RevealFindParams wraps the parameters needed to interact with the Reveal API
