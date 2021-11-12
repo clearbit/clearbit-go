@@ -11,8 +11,6 @@ import (
 
 // Client is a Clearbit client for making Clearbit API requests.
 type Client struct {
-	sling *sling.Sling
-
 	Autocomplete *AutocompleteService
 	Person       *PersonService
 	Company      *CompanyService
