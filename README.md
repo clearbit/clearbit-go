@@ -3,6 +3,10 @@
 
 Package clearbit provides a client for using the Clearbit API.
 
+## Maintenance Status
+
+This repository is currently not actively maintained. If you're looking to integrate with Clearbit's API we recommend looking at the HTTP requests available in our documentation at [clearbit.com/docs](https://clearbit.com/docs)
+
 ## Usage
 
 To use one of the Clearbit APIs you'll first need to create a client by calling the `NewClient` function.
