@@ -1,11 +1,11 @@
+## ⚠️ DEPRECATION WARNING
+
+This package is no longer being maintained. If you're looking to integrate with Clearbit's API we recommend looking at the HTTP requests available in our documentation at [clearbit.com/docs](https://clearbit.com/docs)
+
 # Clearbit Go Bindings
 [![Build Status](https://travis-ci.org/clearbit/clearbit-go.svg?branch=master)](https://travis-ci.org/clearbit/clearbit-go) [![GoDoc](https://godoc.org/github.com/clearbit/clearbit-go?status.svg)](https://godoc.org/github.com/clearbit/clearbit-go/clearbit)
 
 Package clearbit provides a client for using the Clearbit API.
-
-## Maintenance Status
-
-This repository is currently not actively maintained. If you're looking to integrate with Clearbit's API we recommend looking at the HTTP requests available in our documentation at [clearbit.com/docs](https://clearbit.com/docs)
 
 ## Usage
 
